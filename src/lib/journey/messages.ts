@@ -45,6 +45,15 @@ export type MessageFieldKey<E extends EntityKey> = E extends keyof MessageFields
 
 export const REQUIRED_MESSAGES: { [E in EntityKey]?: Partial<Record<MessageFieldKey<E>, string>> } = {
   // <custom:messages>
+  beteiligte: { vorname: "Bitte den Vornamen eingeben.", nachname: "Bitte den Nachnamen eingeben.", rolle: "Bitte eine Rolle auswählen." },
+  informationsquellen: { bezeichnung: "Bitte die Bezeichnung der Quelle eingeben.", art: "Bitte die Art der Quelle auswählen." },
+  regeln_und_befugnisse: { regelbezeichnung: "Bitte die Regelbezeichnung eingeben.", regeltext: "Bitte den Regeltext eingeben." },
+  vorgaenge: { vorgangsnummer: "Bitte die Vorgangsnummer eingeben.", bearbeiter: "Bitte einen Bearbeiter auswählen.", eingangsdatum: "Bitte das Eingangsdatum wählen.", prozessschritt: "Bitte den Prozessschritt auswählen." },
+  anforderungen_und_angaben: { vorgang: "Bitte einen Vorgang auswählen.", bezeichnung: "Bitte die Bezeichnung der Angabe eingeben.", angabestatus: "Bitte den Status der Angabe wählen." },
+  fachliche_beurteilungen: { vorgang: "Bitte einen Vorgang auswählen.", beurteiler: "Bitte einen Beurteiler auswählen.", beurteilungstext: "Bitte die Beurteilung eingeben.", gueltigkeitsstatus: "Bitte den Gültigkeitsstatus wählen." },
+  rueckfragen: { vorgang: "Bitte einen Vorgang auswählen.", adressat: "Bitte einen Adressaten auswählen.", fragetext: "Bitte den Fragetext eingeben.", status: "Bitte den Status der Rückfrage wählen." },
+  entscheidungen_und_freigaben: { vorgang: "Bitte einen Vorgang auswählen.", entscheider: "Bitte einen Entscheider auswählen.", freigabestatus: "Bitte den Freigabestatus wählen." },
+  erfahrungen: { vorgang: "Bitte einen Vorgang auswählen.", titel: "Bitte einen Titel eingeben.", beschreibung: "Bitte die Erfahrung beschreiben.", art: "Bitte die Art der Erfahrung wählen." },
   // </custom:messages>
 };
 

@@ -20,6 +20,7 @@
 import type { ComponentType } from 'react';
 
 // <custom:intent-imports>
+import { IconFilePlus, IconChecklist, IconClipboardCheck, IconMessageQuestion, IconMessageCheck, IconGavel } from '@tabler/icons-react';
 // </custom:intent-imports>
 
 export interface IntentLink {
@@ -42,6 +43,12 @@ export interface IntentLink {
 
 export const INTENTS: IntentLink[] = [
   // <custom:intents>
+  { path: '/intents/vorgang-anlegen', label: { de: 'Vorgang anlegen', en: 'Create case' }, icon: IconFilePlus, description: 'Kundenanfrage aufnehmen und Vorgang mit ersten Anforderungen samt Quelle anlegen.' },
+  { path: '/intents/anforderungen-pruefen', label: { de: 'Anforderungen prüfen', en: 'Review requirements' }, icon: IconChecklist, description: 'Angaben eines Vorgangs prüfen, Lücken und Widersprüche markieren und den Prozessschritt weiterschalten.' },
+  { path: '/intents/beurteilung-vorbereiten', label: { de: 'Beurteilung vorbereiten', en: 'Prepare assessment' }, icon: IconClipboardCheck, description: 'Fachliche Beurteilung zu einer Anforderung durch den zuständigen Beurteiler anlegen; KI-Vorschläge bleiben unbestätigt.' },
+  { path: '/intents/rueckfrage-stellen', label: { de: 'Rückfrage bündeln und stellen', en: 'Prepare follow-up question' }, icon: IconMessageQuestion, description: 'Rückfrage an zuständigen Beteiligten richten und mit betroffenen Anforderungen verbinden.' },
+  { path: '/intents/antwort-erfassen', label: { de: 'Antwort erfassen', en: 'Record answer' }, icon: IconMessageCheck, description: 'Eingehende Antwort der Rückfrage zuordnen und bei geänderter Angabe alten und neuen Wert festhalten.' },
+  { path: '/intents/entscheidung-treffen', label: { de: 'Entscheidung treffen', en: 'Make decision' }, icon: IconGavel, description: 'Entscheidung mit Grundlage, Beurteilung, Regel und geprüfter Befugnis festhalten und Freigabestatus setzen.' },
   // </custom:intents>
 ];
 
@@ -52,7 +59,7 @@ export const INTENTS: IntentLink[] = [
  * purpose — a scaffold update resets it to false (self-healing if Phase 2
  * never ran).
  */
-export const INTENTS_PENDING = true;
+export const INTENTS_PENDING = false;
 
 /**
  * When the Phase-1 bundle was deployed (ISO, set by the service together with
