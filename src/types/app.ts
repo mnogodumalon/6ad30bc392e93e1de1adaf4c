@@ -1,0 +1,451 @@
+import { lookupLabel } from '@/i18n';
+
+// AUTOMATICALLY GENERATED TYPES - DO NOT EDIT
+
+export type LookupValue = { key: string; label: string };
+/** A raw record URL (applookup reference). NEVER render this directly
+ *  in JSX — it is a URL, not a display value. Show the enriched `*Name`
+ *  field or resolve it via the entity map instead. Assignable to/from
+ *  string everywhere; the `& {}` keeps the alias NAME visible in tsc
+ *  error messages (a plain primitive alias gets normalized away). */
+export type RecordUrl = string & {};
+export type GeoLocation = { lat: number; long: number; info?: string };
+
+export type AttachmentType = 'file' | 'note' | 'url' | 'json';
+export interface Attachment {
+  id: string;
+  type: AttachmentType;
+  label: string | null;
+  value: string | null;
+  active: boolean;
+  createdat?: string | null;
+  updatedat?: string | null;
+}
+
+export interface AttachmentInput {
+  type: AttachmentType;
+  label?: string;
+  value: string;
+  active?: boolean;
+}
+
+export interface Beteiligte {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    vorname?: string;
+    nachname?: string;
+    rolle?: LookupValue;
+    abteilung?: string;
+    zustaendigkeit?: string;
+    email?: string;
+    telefon?: string;
+    entscheidungsbefugt?: boolean;
+    befugnisgrenzen?: string;
+  };
+}
+
+export interface Informationsquellen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    bezeichnung?: string;
+    art?: LookupValue;
+    beschreibung?: string;
+    verantwortlicher?: RecordUrl; // applookup -> URL zu 'Beteiligte' Record
+    bekannte_schwaechen?: string;
+  };
+}
+
+export interface RegelnUndBefugnisse {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    regelbezeichnung?: string;
+    regeltext?: string;
+    geltungsbereich?: string;
+    regelart?: LookupValue;
+    berechtigte_rolle?: LookupValue;
+    berechtigter?: RecordUrl; // applookup -> URL zu 'Beteiligte' Record
+    freigabepflicht?: boolean;
+    gueltig_ab?: string; // Format: YYYY-MM-DD oder ISO String
+    status?: LookupValue;
+  };
+}
+
+export interface Vorgaenge {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    uebergabestatus?: LookupValue;
+    vorgangsnummer?: string;
+    kunde?: RecordUrl; // applookup -> URL zu 'Beteiligte' Record
+    bearbeiter?: RecordUrl; // applookup -> URL zu 'Beteiligte' Record
+    eingangsdatum?: string; // Format: YYYY-MM-DD oder ISO String
+    kundenanfrage?: string;
+    prozessschritt?: LookupValue;
+    freigabestatus?: LookupValue;
+    tatsaechlicher_ablauf?: string;
+    verzoegerungen_nacharbeit?: string;
+    entwurf_zusammenfassung?: string;
+    entwurf_geklaert?: string;
+    entwurf_offen?: string;
+  };
+}
+
+export interface AnforderungenUndAngaben {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    vorgang?: RecordUrl; // applookup -> URL zu 'Vorgaenge' Record
+    bezeichnung?: string;
+    angabe?: string;
+    informationsquelle?: RecordUrl; // applookup -> URL zu 'Informationsquellen' Record
+    quellenverweis?: string;
+    angabestatus?: LookupValue;
+    luecke_widerspruch?: string;
+    unsicherheit?: string;
+    pruefpunkt?: string;
+  };
+}
+
+export interface FachlicheBeurteilungen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    vorgang?: RecordUrl; // applookup -> URL zu 'Vorgaenge' Record
+    anforderung?: RecordUrl; // applookup -> URL zu 'AnforderungenUndAngaben' Record
+    beurteiler?: RecordUrl; // applookup -> URL zu 'Beteiligte' Record
+    fachbereich?: LookupValue;
+    beurteilungstext?: string;
+    ergebnis?: string;
+    unsicherheiten?: string;
+    gueltigkeitsstatus?: LookupValue;
+    beurteilungsdatum?: string; // Format: YYYY-MM-DD oder ISO String
+  };
+}
+
+export interface Rueckfragen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    vorgang?: RecordUrl; // applookup -> URL zu 'Vorgaenge' Record
+    anforderungen?: RecordUrl[];
+    adressat?: RecordUrl; // applookup -> URL zu 'Beteiligte' Record
+    fragetext?: string;
+    buendelkennung?: string;
+    status?: LookupValue;
+    antwort?: string;
+    antwortdatum?: string; // Format: YYYY-MM-DD oder ISO String
+    alter_wert?: string;
+    neuer_wert?: string;
+  };
+}
+
+export interface EntscheidungenUndFreigaben {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    vorgang?: RecordUrl; // applookup -> URL zu 'Vorgaenge' Record
+    grundlage_anforderungen?: RecordUrl[];
+    beurteilung?: RecordUrl; // applookup -> URL zu 'FachlicheBeurteilungen' Record
+    regel?: RecordUrl; // applookup -> URL zu 'RegelnUndBefugnisse' Record
+    entscheider?: RecordUrl; // applookup -> URL zu 'Beteiligte' Record
+    befugnis_geprueft?: boolean;
+    unsicherheiten?: string;
+    vorschlag?: string;
+    entscheidung?: string;
+    begruendung?: string;
+    folgen?: string;
+    freigabestatus?: LookupValue;
+    entscheidungsdatum?: string; // Format: YYYY-MM-DD oder ISO String
+  };
+}
+
+export interface Erfahrungen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    vorgang?: RecordUrl; // applookup -> URL zu 'Vorgaenge' Record
+    titel?: string;
+    kategorie?: LookupValue;
+    beschreibung?: string;
+    ursache?: string;
+    verbesserungsvorschlag?: string;
+    pruefstatus?: LookupValue;
+    pruefer?: RecordUrl; // applookup -> URL zu 'Beteiligte' Record
+    wiederverwendbar?: boolean;
+    art?: LookupValue;
+  };
+}
+
+export const APP_IDS = {
+  BETEILIGTE: '6ad30b8e0042e397617f53a8',
+  INFORMATIONSQUELLEN: '6ad30b9338e75bfe185688eb',
+  REGELN_UND_BEFUGNISSE: '6ad30b940a982f4bfcc4e103',
+  VORGAENGE: '6ad30b94865676544f7d28ef',
+  ANFORDERUNGEN_UND_ANGABEN: '6ad30b958d763c2961a03cf4',
+  FACHLICHE_BEURTEILUNGEN: '6ad30b963ba9b811867e67e7',
+  RUECKFRAGEN: '6ad30b97569dcebe35a88423',
+  ENTSCHEIDUNGEN_UND_FREIGABEN: '6ad30b9868280a18c8e01833',
+  ERFAHRUNGEN: '6ad30b984a902988e7a53bb8',
+} as const;
+
+
+export const LOOKUP_OPTIONS: Record<string, Record<string, {key: string, label: string}[]>> = {
+  'beteiligte': {
+    rolle: [{ key: "vertrieb", get label() { return lookupLabel('beteiligte', 'rolle', "vertrieb") ?? "Vertrieb"; } }, { key: "konstruktion", get label() { return lookupLabel('beteiligte', 'rolle', "konstruktion") ?? "Konstruktion"; } }, { key: "arbeitsvorbereitung", get label() { return lookupLabel('beteiligte', 'rolle', "arbeitsvorbereitung") ?? "Arbeitsvorbereitung"; } }, { key: "qualitaetssicherung", get label() { return lookupLabel('beteiligte', 'rolle', "qualitaetssicherung") ?? "Qualitätssicherung"; } }, { key: "kunde", get label() { return lookupLabel('beteiligte', 'rolle', "kunde") ?? "Kunde"; } }, { key: "sonstige", get label() { return lookupLabel('beteiligte', 'rolle', "sonstige") ?? "Sonstige"; } }],
+  },
+  'informationsquellen': {
+    art: [{ key: "system", get label() { return lookupLabel('informationsquellen', 'art', "system") ?? "System"; } }, { key: "dokument", get label() { return lookupLabel('informationsquellen', 'art', "dokument") ?? "Dokument"; } }, { key: "informelles_hilfsmittel", get label() { return lookupLabel('informationsquellen', 'art', "informelles_hilfsmittel") ?? "Informelles Hilfsmittel"; } }, { key: "bewaehrte_routine", get label() { return lookupLabel('informationsquellen', 'art', "bewaehrte_routine") ?? "Bewährte Routine"; } }],
+  },
+  'regeln_und_befugnisse': {
+    regelart: [{ key: "verbindlich", get label() { return lookupLabel('regeln_und_befugnisse', 'regelart', "verbindlich") ?? "Verbindlich"; } }, { key: "empfehlung", get label() { return lookupLabel('regeln_und_befugnisse', 'regelart', "empfehlung") ?? "Empfehlung"; } }],
+    berechtigte_rolle: [{ key: "vertrieb", get label() { return lookupLabel('regeln_und_befugnisse', 'berechtigte_rolle', "vertrieb") ?? "Vertrieb"; } }, { key: "konstruktion", get label() { return lookupLabel('regeln_und_befugnisse', 'berechtigte_rolle', "konstruktion") ?? "Konstruktion"; } }, { key: "arbeitsvorbereitung", get label() { return lookupLabel('regeln_und_befugnisse', 'berechtigte_rolle', "arbeitsvorbereitung") ?? "Arbeitsvorbereitung"; } }, { key: "qualitaetssicherung", get label() { return lookupLabel('regeln_und_befugnisse', 'berechtigte_rolle', "qualitaetssicherung") ?? "Qualitätssicherung"; } }, { key: "geschaeftsleitung", get label() { return lookupLabel('regeln_und_befugnisse', 'berechtigte_rolle', "geschaeftsleitung") ?? "Geschäftsleitung"; } }],
+    status: [{ key: "aktiv", get label() { return lookupLabel('regeln_und_befugnisse', 'status', "aktiv") ?? "Aktiv"; } }, { key: "inaktiv", get label() { return lookupLabel('regeln_und_befugnisse', 'status', "inaktiv") ?? "Inaktiv"; } }],
+  },
+  'vorgaenge': {
+    uebergabestatus: [{ key: "nicht_bereit", get label() { return lookupLabel('vorgaenge', 'uebergabestatus', "nicht_bereit") ?? "Nicht bereit"; } }, { key: "bereit_mit_vorbehalt", get label() { return lookupLabel('vorgaenge', 'uebergabestatus', "bereit_mit_vorbehalt") ?? "Bereit mit Vorbehalt"; } }, { key: "uebergabebereit", get label() { return lookupLabel('vorgaenge', 'uebergabestatus', "uebergabebereit") ?? "Übergabebereit"; } }],
+    prozessschritt: [{ key: "anfrage_verstehen", get label() { return lookupLabel('vorgaenge', 'prozessschritt', "anfrage_verstehen") ?? "Anfrage verstehen"; } }, { key: "informationen_pruefen", get label() { return lookupLabel('vorgaenge', 'prozessschritt', "informationen_pruefen") ?? "Informationen prüfen"; } }, { key: "beurteilungen_vorbereiten", get label() { return lookupLabel('vorgaenge', 'prozessschritt', "beurteilungen_vorbereiten") ?? "Beurteilungen vorbereiten"; } }, { key: "beteiligte_einbeziehen", get label() { return lookupLabel('vorgaenge', 'prozessschritt', "beteiligte_einbeziehen") ?? "Beteiligte einbeziehen"; } }, { key: "kommunikation_organisieren", get label() { return lookupLabel('vorgaenge', 'prozessschritt', "kommunikation_organisieren") ?? "Kommunikation organisieren"; } }, { key: "entscheidungen_treffen", get label() { return lookupLabel('vorgaenge', 'prozessschritt', "entscheidungen_treffen") ?? "Entscheidungen treffen"; } }, { key: "auftragsentwurf", get label() { return lookupLabel('vorgaenge', 'prozessschritt', "auftragsentwurf") ?? "Auftragsentwurf"; } }, { key: "abgeschlossen", get label() { return lookupLabel('vorgaenge', 'prozessschritt', "abgeschlossen") ?? "Abgeschlossen"; } }],
+    freigabestatus: [{ key: "offen", get label() { return lookupLabel('vorgaenge', 'freigabestatus', "offen") ?? "Offen"; } }, { key: "in_pruefung", get label() { return lookupLabel('vorgaenge', 'freigabestatus', "in_pruefung") ?? "In Prüfung"; } }, { key: "freigegeben", get label() { return lookupLabel('vorgaenge', 'freigabestatus', "freigegeben") ?? "Freigegeben"; } }, { key: "abgelehnt", get label() { return lookupLabel('vorgaenge', 'freigabestatus', "abgelehnt") ?? "Abgelehnt"; } }],
+  },
+  'anforderungen_und_angaben': {
+    angabestatus: [{ key: "bestaetigt", get label() { return lookupLabel('anforderungen_und_angaben', 'angabestatus', "bestaetigt") ?? "Bestätigt"; } }, { key: "ungeprueft", get label() { return lookupLabel('anforderungen_und_angaben', 'angabestatus', "ungeprueft") ?? "Ungeprüft"; } }, { key: "fehlend", get label() { return lookupLabel('anforderungen_und_angaben', 'angabestatus', "fehlend") ?? "Fehlend"; } }, { key: "widerspruechlich", get label() { return lookupLabel('anforderungen_und_angaben', 'angabestatus', "widerspruechlich") ?? "Widersprüchlich"; } }],
+  },
+  'fachliche_beurteilungen': {
+    fachbereich: [{ key: "vertrieb", get label() { return lookupLabel('fachliche_beurteilungen', 'fachbereich', "vertrieb") ?? "Vertrieb"; } }, { key: "konstruktion", get label() { return lookupLabel('fachliche_beurteilungen', 'fachbereich', "konstruktion") ?? "Konstruktion"; } }, { key: "arbeitsvorbereitung", get label() { return lookupLabel('fachliche_beurteilungen', 'fachbereich', "arbeitsvorbereitung") ?? "Arbeitsvorbereitung"; } }, { key: "qualitaetssicherung", get label() { return lookupLabel('fachliche_beurteilungen', 'fachbereich', "qualitaetssicherung") ?? "Qualitätssicherung"; } }],
+    gueltigkeitsstatus: [{ key: "entwurf", get label() { return lookupLabel('fachliche_beurteilungen', 'gueltigkeitsstatus', "entwurf") ?? "Entwurf"; } }, { key: "ki_vorschlag", get label() { return lookupLabel('fachliche_beurteilungen', 'gueltigkeitsstatus', "ki_vorschlag") ?? "KI-Vorschlag"; } }, { key: "fachlich_bestaetigt", get label() { return lookupLabel('fachliche_beurteilungen', 'gueltigkeitsstatus', "fachlich_bestaetigt") ?? "Fachlich bestätigt"; } }, { key: "verworfen", get label() { return lookupLabel('fachliche_beurteilungen', 'gueltigkeitsstatus', "verworfen") ?? "Verworfen"; } }],
+  },
+  'rueckfragen': {
+    status: [{ key: "vorbereitet", get label() { return lookupLabel('rueckfragen', 'status', "vorbereitet") ?? "Vorbereitet"; } }, { key: "gesendet", get label() { return lookupLabel('rueckfragen', 'status', "gesendet") ?? "Gesendet"; } }, { key: "beantwortet", get label() { return lookupLabel('rueckfragen', 'status', "beantwortet") ?? "Beantwortet"; } }, { key: "erledigt", get label() { return lookupLabel('rueckfragen', 'status', "erledigt") ?? "Erledigt"; } }],
+  },
+  'entscheidungen_und_freigaben': {
+    freigabestatus: [{ key: "offen", get label() { return lookupLabel('entscheidungen_und_freigaben', 'freigabestatus', "offen") ?? "Offen"; } }, { key: "freigegeben", get label() { return lookupLabel('entscheidungen_und_freigaben', 'freigabestatus', "freigegeben") ?? "Freigegeben"; } }, { key: "abgelehnt", get label() { return lookupLabel('entscheidungen_und_freigaben', 'freigabestatus', "abgelehnt") ?? "Abgelehnt"; } }, { key: "zurueckgestellt", get label() { return lookupLabel('entscheidungen_und_freigaben', 'freigabestatus', "zurueckgestellt") ?? "Zurückgestellt"; } }],
+  },
+  'erfahrungen': {
+    kategorie: [{ key: "bewaehrte_routine", get label() { return lookupLabel('erfahrungen', 'kategorie', "bewaehrte_routine") ?? "Bewährte Routine"; } }, { key: "fehler", get label() { return lookupLabel('erfahrungen', 'kategorie', "fehler") ?? "Fehler"; } }, { key: "nacharbeit", get label() { return lookupLabel('erfahrungen', 'kategorie', "nacharbeit") ?? "Nacharbeit"; } }, { key: "verzoegerung", get label() { return lookupLabel('erfahrungen', 'kategorie', "verzoegerung") ?? "Verzögerung"; } }, { key: "informationsluecke", get label() { return lookupLabel('erfahrungen', 'kategorie', "informationsluecke") ?? "Informationslücke"; } }, { key: "widerspruch", get label() { return lookupLabel('erfahrungen', 'kategorie', "widerspruch") ?? "Widerspruch"; } }, { key: "abstimmungsschleife", get label() { return lookupLabel('erfahrungen', 'kategorie', "abstimmungsschleife") ?? "Abstimmungsschleife"; } }],
+    pruefstatus: [{ key: "ungeprueft", get label() { return lookupLabel('erfahrungen', 'pruefstatus', "ungeprueft") ?? "Ungeprüft"; } }, { key: "in_pruefung", get label() { return lookupLabel('erfahrungen', 'pruefstatus', "in_pruefung") ?? "In Prüfung"; } }, { key: "geprueft", get label() { return lookupLabel('erfahrungen', 'pruefstatus', "geprueft") ?? "Geprüft"; } }, { key: "verworfen", get label() { return lookupLabel('erfahrungen', 'pruefstatus', "verworfen") ?? "Verworfen"; } }],
+    art: [{ key: "beobachtete_tatsache", get label() { return lookupLabel('erfahrungen', 'art', "beobachtete_tatsache") ?? "Beobachtete Tatsache"; } }, { key: "ungeprueft_annahme", get label() { return lookupLabel('erfahrungen', 'art', "ungeprueft_annahme") ?? "Ungeprüfte Annahme"; } }, { key: "bestaetigte_erkenntnis", get label() { return lookupLabel('erfahrungen', 'art', "bestaetigte_erkenntnis") ?? "Fachlich bestätigte Erkenntnis"; } }, { key: "verbindliche_regel", get label() { return lookupLabel('erfahrungen', 'art', "verbindliche_regel") ?? "Verbindliche Regel"; } }, { key: "situative_entscheidung", get label() { return lookupLabel('erfahrungen', 'art', "situative_entscheidung") ?? "Situationsabhängige Entscheidung"; } }],
+  },
+};
+
+// Optimistic LookupValue writes: never re-type a label — resolve the schema
+// option instead (its label is a locale-aware getter; falls back to the key).
+// WRONG: status: { key: 'offen', label: 'Offen' }   (frozen in one language)
+// RIGHT: status: lookupOption('<appKey>', 'status', 'offen')
+export function lookupOption(app: string, field: string, key: string): LookupValue {
+  return LOOKUP_OPTIONS[app]?.[field]?.find(o => o.key === key) ?? { key, label: key };
+}
+
+export const FIELD_TYPES: Record<string, Record<string, string>> = {
+  'beteiligte': {
+    'vorname': 'string/text',
+    'nachname': 'string/text',
+    'rolle': 'lookup/select',
+    'abteilung': 'string/text',
+    'zustaendigkeit': 'string/textarea',
+    'email': 'string/email',
+    'telefon': 'string/tel',
+    'entscheidungsbefugt': 'bool',
+    'befugnisgrenzen': 'string/textarea',
+  },
+  'informationsquellen': {
+    'bezeichnung': 'string/text',
+    'art': 'lookup/select',
+    'beschreibung': 'string/textarea',
+    'verantwortlicher': 'applookup/select',
+    'bekannte_schwaechen': 'string/textarea',
+  },
+  'regeln_und_befugnisse': {
+    'regelbezeichnung': 'string/text',
+    'regeltext': 'string/textarea',
+    'geltungsbereich': 'string/text',
+    'regelart': 'lookup/radio',
+    'berechtigte_rolle': 'lookup/select',
+    'berechtigter': 'applookup/select',
+    'freigabepflicht': 'bool',
+    'gueltig_ab': 'date/date',
+    'status': 'lookup/select',
+  },
+  'vorgaenge': {
+    'uebergabestatus': 'lookup/select',
+    'vorgangsnummer': 'string/text',
+    'kunde': 'applookup/select',
+    'bearbeiter': 'applookup/select',
+    'eingangsdatum': 'date/date',
+    'kundenanfrage': 'string/textarea',
+    'prozessschritt': 'lookup/select',
+    'freigabestatus': 'lookup/select',
+    'tatsaechlicher_ablauf': 'string/textarea',
+    'verzoegerungen_nacharbeit': 'string/textarea',
+    'entwurf_zusammenfassung': 'string/textarea',
+    'entwurf_geklaert': 'string/textarea',
+    'entwurf_offen': 'string/textarea',
+  },
+  'anforderungen_und_angaben': {
+    'vorgang': 'applookup/select',
+    'bezeichnung': 'string/text',
+    'angabe': 'string/textarea',
+    'informationsquelle': 'applookup/select',
+    'quellenverweis': 'string/text',
+    'angabestatus': 'lookup/select',
+    'luecke_widerspruch': 'string/textarea',
+    'unsicherheit': 'string/textarea',
+    'pruefpunkt': 'string/textarea',
+  },
+  'fachliche_beurteilungen': {
+    'vorgang': 'applookup/select',
+    'anforderung': 'applookup/select',
+    'beurteiler': 'applookup/select',
+    'fachbereich': 'lookup/select',
+    'beurteilungstext': 'string/textarea',
+    'ergebnis': 'string/text',
+    'unsicherheiten': 'string/textarea',
+    'gueltigkeitsstatus': 'lookup/select',
+    'beurteilungsdatum': 'date/date',
+  },
+  'rueckfragen': {
+    'vorgang': 'applookup/select',
+    'anforderungen': 'multipleapplookup/select',
+    'adressat': 'applookup/select',
+    'fragetext': 'string/textarea',
+    'buendelkennung': 'string/text',
+    'status': 'lookup/select',
+    'antwort': 'string/textarea',
+    'antwortdatum': 'date/date',
+    'alter_wert': 'string/text',
+    'neuer_wert': 'string/text',
+  },
+  'entscheidungen_und_freigaben': {
+    'vorgang': 'applookup/select',
+    'grundlage_anforderungen': 'multipleapplookup/select',
+    'beurteilung': 'applookup/select',
+    'regel': 'applookup/select',
+    'entscheider': 'applookup/select',
+    'befugnis_geprueft': 'bool',
+    'unsicherheiten': 'string/textarea',
+    'vorschlag': 'string/textarea',
+    'entscheidung': 'string/textarea',
+    'begruendung': 'string/textarea',
+    'folgen': 'string/textarea',
+    'freigabestatus': 'lookup/select',
+    'entscheidungsdatum': 'date/date',
+  },
+  'erfahrungen': {
+    'vorgang': 'applookup/select',
+    'titel': 'string/text',
+    'kategorie': 'lookup/select',
+    'beschreibung': 'string/textarea',
+    'ursache': 'string/textarea',
+    'verbesserungsvorschlag': 'string/textarea',
+    'pruefstatus': 'lookup/select',
+    'pruefer': 'applookup/select',
+    'wiederverwendbar': 'bool',
+    'art': 'lookup/select',
+  },
+};
+
+export const HUB_TOPOLOGY: Record<string, { field: string; entity: string }[]> = {
+  'beteiligte': [
+    { field: 'verantwortlicher', entity: 'informationsquellen' },
+    { field: 'berechtigter', entity: 'regeln_und_befugnisse' },
+    { field: 'kunde', entity: 'vorgaenge' },
+    { field: 'bearbeiter', entity: 'vorgaenge' },
+    { field: 'beurteiler', entity: 'fachliche_beurteilungen' },
+    { field: 'adressat', entity: 'rueckfragen' },
+    { field: 'entscheider', entity: 'entscheidungen_und_freigaben' },
+    { field: 'pruefer', entity: 'erfahrungen' },
+  ],
+  'vorgaenge': [
+    { field: 'vorgang', entity: 'anforderungen_und_angaben' },
+    { field: 'vorgang', entity: 'fachliche_beurteilungen' },
+    { field: 'vorgang', entity: 'rueckfragen' },
+    { field: 'vorgang', entity: 'entscheidungen_und_freigaben' },
+    { field: 'vorgang', entity: 'erfahrungen' },
+  ],
+  'anforderungen_und_angaben': [
+    { field: 'anforderung', entity: 'fachliche_beurteilungen' },
+    { field: 'anforderungen', entity: 'rueckfragen' },
+    { field: 'grundlage_anforderungen', entity: 'entscheidungen_und_freigaben' },
+  ],
+};
+
+type StripLookup<T> = {
+  [K in keyof T]: T[K] extends LookupValue | undefined ? string | LookupValue | undefined
+    : T[K] extends LookupValue[] | undefined ? string[] | LookupValue[] | undefined
+    : T[K];
+};
+
+// Helper Types for creating new records (lookup fields as plain strings for API)
+export type CreateBeteiligte = StripLookup<Beteiligte['fields']>;
+export type CreateInformationsquellen = StripLookup<Informationsquellen['fields']>;
+export type CreateRegelnUndBefugnisse = StripLookup<RegelnUndBefugnisse['fields']>;
+export type CreateVorgaenge = StripLookup<Vorgaenge['fields']>;
+export type CreateAnforderungenUndAngaben = StripLookup<AnforderungenUndAngaben['fields']>;
+export type CreateFachlicheBeurteilungen = StripLookup<FachlicheBeurteilungen['fields']>;
+export type CreateRueckfragen = StripLookup<Rueckfragen['fields']>;
+export type CreateEntscheidungenUndFreigaben = StripLookup<EntscheidungenUndFreigaben['fields']>;
+export type CreateErfahrungen = StripLookup<Erfahrungen['fields']>;
