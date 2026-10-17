@@ -1,8 +1,8 @@
 /**
  * useVorgangAnlegenFlow — the plumbing of the flow « Vorgang anlegen », generated from the plan.
  *
- * Writes `vorgaenge`: asks `vorgangsnummer`, `kunde`, `bearbeiter`, `kundenanfrage`; sets `eingangsdatum`, `prozessschritt`, `freigabestatus`, `uebergabestatus` itself.
-Writes `anforderungen_und_angaben` (only when the person fills it): asks `bezeichnung`, `angabe`, `informationsquelle`, `quellenverweis`, `angabestatus`, `luecke_widerspruch`; links `vorgang` ← the created `vorgaenge`.
+ * Writes `vorgaenge`: asks `kunde`, `bearbeiter`, `kundenanfrage`, `vorgangsnummer`; sets `eingangsdatum`, `freigabestatus`, `prozessschritt`, `uebergabestatus` itself.
+Writes `anforderungen_und_angaben` (only when the person fills it): asks `angabe`, `bezeichnung`, `angabestatus`, `quellenverweis`, `informationsquelle`, `luecke_widerspruch`; links `vorgang` ← the created `vorgaenge`.
  * The hook OWNS: the form(s) with exactly these fields and the plan's required
  * ingredients, one record search per picked field (columns and filter from
  * the plan), and the submit plan with its fixed and derived values. A page
@@ -17,19 +17,19 @@ Writes `anforderungen_und_angaben` (only when the person fills it): asks `bezeic
  *   messages  the sentence for an empty required field, per field
  *
  *   const flow = useVorgangAnlegenFlow({
- *     steps: { kunde: 1, bearbeiter: 2, informationsquelle: 3, vorgangsnummer: 4, kundenanfrage: 4, bezeichnung: 4, angabe: 4, quellenverweis: 4, angabestatus: 4, luecke_widerspruch: 4 },
+ *     steps: { kunde: 1, bearbeiter: 2, informationsquelle: 3, kundenanfrage: 4, vorgangsnummer: 4, angabe: 4, bezeichnung: 4, angabestatus: 4, quellenverweis: 4, luecke_widerspruch: 4 },
  *     items: { kunde: r => ({ id: r.id, title: fieldText(r, 'vorname') }) },
  *   });
  *   <IntentWizardShell forms={flow.forms} draftKey={flow.draftKey} …>
  *     <EntitySelectStep {...flow.picks.kunde.select} {...flow.pick('kunde')} />
  *     <EntitySelectStep {...flow.picks.bearbeiter.select} {...flow.pick('bearbeiter')} />
  *     <EntitySelectStep {...flow.picks.informationsquelle.select} {...flow.pick('informationsquelle')} />
- *     <Bound form={flow.forms.vorgaenge} name="vorgangsnummer" />
  *     <Bound form={flow.forms.vorgaenge} name="kundenanfrage" />
- *     <Bound form={flow.forms.anforderungen_und_angaben} name="bezeichnung" />
+ *     <Bound form={flow.forms.vorgaenge} name="vorgangsnummer" />
  *     <Bound form={flow.forms.anforderungen_und_angaben} name="angabe" />
- *     <Bound form={flow.forms.anforderungen_und_angaben} name="quellenverweis" />
+ *     <Bound form={flow.forms.anforderungen_und_angaben} name="bezeichnung" />
  *     <Bound form={flow.forms.anforderungen_und_angaben} name="angabestatus" />
+ *     <Bound form={flow.forms.anforderungen_und_angaben} name="quellenverweis" />
  *     <Bound form={flow.forms.anforderungen_und_angaben} name="luecke_widerspruch" />
  *     <StepNav onNext={() => flow.validateStep(n)} />
  *     {!flow.submit.done && <SummaryStep forms={flow.formList} submit={flow.submit} />}
@@ -99,16 +99,16 @@ function hasValues(form: StepForm): boolean {
 export function useVorgangAnlegenFlow(options: VorgangAnlegenFlowOptions = {}) {
   const steps = { ...DEFAULT_STEPS, ...(options.steps ?? {}) } as Record<string, number>;
   const vorgaenge = useStepForm('vorgaenge', {
-    fields: ["vorgangsnummer", "kunde", "bearbeiter", "kundenanfrage"],
-    steps: only(steps, ["vorgangsnummer", "kunde", "bearbeiter", "kundenanfrage"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["vorgangsnummer", "kunde", "bearbeiter", "kundenanfrage"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["vorgangsnummer", "kunde", "bearbeiter", "kundenanfrage"]),
+    fields: ["kunde", "bearbeiter", "kundenanfrage", "vorgangsnummer"],
+    steps: only(steps, ["kunde", "bearbeiter", "kundenanfrage", "vorgangsnummer"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["kunde", "bearbeiter", "kundenanfrage", "vorgangsnummer"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["kunde", "bearbeiter", "kundenanfrage", "vorgangsnummer"]),
   });
   const anforderungen_und_angaben = useStepForm('anforderungen_und_angaben', {
-    fields: ["bezeichnung", "angabe", "informationsquelle", "quellenverweis", "angabestatus", "luecke_widerspruch"],
-    steps: only(steps, ["bezeichnung", "angabe", "informationsquelle", "quellenverweis", "angabestatus", "luecke_widerspruch"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["bezeichnung", "angabe", "informationsquelle", "quellenverweis", "angabestatus", "luecke_widerspruch"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["bezeichnung", "angabe", "informationsquelle", "quellenverweis", "angabestatus", "luecke_widerspruch"]),
+    fields: ["angabe", "bezeichnung", "angabestatus", "quellenverweis", "informationsquelle", "luecke_widerspruch"],
+    steps: only(steps, ["angabe", "bezeichnung", "angabestatus", "quellenverweis", "informationsquelle", "luecke_widerspruch"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["angabe", "bezeichnung", "angabestatus", "quellenverweis", "informationsquelle", "luecke_widerspruch"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["angabe", "bezeichnung", "angabestatus", "quellenverweis", "informationsquelle", "luecke_widerspruch"]),
   });
   const forms: VorgangAnlegenForms = { vorgaenge, anforderungen_und_angaben };
   const formList: StepForm[] = [vorgaenge, anforderungen_und_angaben];
@@ -157,13 +157,13 @@ export function useVorgangAnlegenFlow(options: VorgangAnlegenFlowOptions = {}) {
       key: 'vorgaenge', entity: 'vorgaenge', form: vorgaenge, primary: true,
       values: (): FormValues => ({
         eingangsdatum: policyFixedValue('vorgaenge', 'eingangsdatum') ?? todayIso(),
-        prozessschritt: policyFixedValue('vorgaenge', 'prozessschritt') ?? "anfrage_verstehen",
         freigabestatus: policyFixedValue('vorgaenge', 'freigabestatus') ?? "offen",
+        prozessschritt: policyFixedValue('vorgaenge', 'prozessschritt') ?? "anfrage_verstehen",
         uebergabestatus: policyFixedValue('vorgaenge', 'uebergabestatus') ?? "nicht_bereit",
       }),
 
       // the review shows what this step sets itself — changeable on „Deine Anwendung“, not here
-      settings: () => [setting('vorgaenge', 'prozessschritt', policyFixedValue('vorgaenge', 'prozessschritt') ?? "anfrage_verstehen"), setting('vorgaenge', 'freigabestatus', policyFixedValue('vorgaenge', 'freigabestatus') ?? "offen"), setting('vorgaenge', 'uebergabestatus', policyFixedValue('vorgaenge', 'uebergabestatus') ?? "nicht_bereit")],
+      settings: () => [setting('vorgaenge', 'freigabestatus', policyFixedValue('vorgaenge', 'freigabestatus') ?? "offen"), setting('vorgaenge', 'prozessschritt', policyFixedValue('vorgaenge', 'prozessschritt') ?? "anfrage_verstehen"), setting('vorgaenge', 'uebergabestatus', policyFixedValue('vorgaenge', 'uebergabestatus') ?? "nicht_bereit")],
 
       // the planner's assumptions that first act here — shown once with „Passt“ / „ändern“
       notices: () => [{"assumed": "freier Text, nur eindeutig", "id": "vorgangsnummer-format", "question": "Wie soll die Vorgangsnummer aufgebaut sein?"}],

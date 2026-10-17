@@ -17,7 +17,7 @@ export const SYSTEM_ASSIGNED: Record<string, string[]> = {};
 export const PLAN_SENTENCES: Record<string, string[]> = {
   "vorgang-anlegen": [
     "Legt an: anforderungen_und_angaben, vorgaenge",
-    "Automatisch: eingangsdatum (heutiges Datum, automatisch), prozessschritt (fester Wert „anfrage_verstehen“), freigabestatus (fester Wert „offen“), uebergabestatus (fester Wert „nicht_bereit“)"
+    "Automatisch: eingangsdatum (heutiges Datum, automatisch), freigabestatus (fester Wert „offen“), prozessschritt (fester Wert „anfrage_verstehen“), uebergabestatus (fester Wert „nicht_bereit“)"
   ],
   "anforderungen-pruefen": [
     "Ändert: anforderungen_und_angaben, vorgaenge",
@@ -26,7 +26,7 @@ export const PLAN_SENTENCES: Record<string, string[]> = {
   "beurteilung-vorbereiten": [
     "Legt an: fachliche_beurteilungen",
     "Ändert: vorgaenge",
-    "Automatisch: gueltigkeitsstatus (fester Wert „entwurf“), beurteilungsdatum (heutiges Datum, automatisch), prozessschritt (fester Wert „beurteilungen_vorbereiten“)"
+    "Automatisch: beurteilungsdatum (heutiges Datum, automatisch), gueltigkeitsstatus (fester Wert „entwurf“), prozessschritt (fester Wert „beurteilungen_vorbereiten“)"
   ],
   "rueckfrage-stellen": [
     "Legt an: rueckfragen",
@@ -35,7 +35,7 @@ export const PLAN_SENTENCES: Record<string, string[]> = {
   ],
   "antwort-erfassen": [
     "Ändert: anforderungen_und_angaben, rueckfragen",
-    "Automatisch: antwortdatum (heutiges Datum, automatisch), status (fester Wert „beantwortet“)"
+    "Automatisch: status (fester Wert „beantwortet“), antwortdatum (heutiges Datum, automatisch)"
   ],
   "entscheidung-treffen": [
     "Legt an: entscheidungen_und_freigaben",

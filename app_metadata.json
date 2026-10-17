@@ -46,7 +46,7 @@
           "description": "One selected option of multiple available options (or `null`/`None`).\n\nThe available options are defined in the `lookup_data` attribute of this control.\n\nThe field value will be the key in this `lookup_data` attribute (or `null`/`None`).\n\nDisplayed as single-select field in HTML pages.",
           "required": true,
           "in_list": true,
-          "in_mobile_list": false,
+          "in_mobile_list": true,
           "in_text": false,
           "in_structured_search": null,
           "in_fulltext_search": true,
@@ -69,7 +69,7 @@
           "description": "A string value not longer than 4000 characters (or `null`/`None`).",
           "required": false,
           "in_list": true,
-          "in_mobile_list": false,
+          "in_mobile_list": true,
           "in_text": false,
           "in_structured_search": null,
           "in_fulltext_search": true,
@@ -102,7 +102,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         },
         "telefon": {
@@ -117,7 +117,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         },
         "entscheidungsbefugt": {
@@ -132,7 +132,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         },
         "befugnisgrenzen": {
@@ -147,7 +147,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         }
       }
@@ -416,7 +416,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true,
           "lookup_data": {
             "nicht_bereit": "Nicht bereit",
@@ -513,7 +513,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true,
           "lookup_data": {
             "anfrage_verstehen": "Anfrage verstehen",
@@ -535,10 +535,10 @@
           "description": "One selected option of multiple available options (or `null`/`None`).\n\nThe available options are defined in the `lookup_data` attribute of this control.\n\nThe field value will be the key in this `lookup_data` attribute (or `null`/`None`).\n\nDisplayed as single-select field in HTML pages.",
           "required": false,
           "in_list": false,
-          "in_mobile_list": false,
+          "in_mobile_list": true,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true,
           "lookup_data": {
             "offen": "Offen",
@@ -559,7 +559,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         },
         "verzoegerungen_nacharbeit": {
@@ -574,7 +574,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         },
         "entwurf_zusammenfassung": {
@@ -589,7 +589,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         },
         "entwurf_geklaert": {
@@ -604,7 +604,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         },
         "entwurf_offen": {
@@ -619,7 +619,7 @@
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
-          "in_fulltext_search": null,
+          "in_fulltext_search": false,
           "in_expert_search": true
         }
       }

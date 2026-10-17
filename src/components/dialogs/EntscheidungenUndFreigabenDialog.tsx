@@ -465,7 +465,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="vorgang">{fieldLabel('entscheidungen_und_freigaben', 'vorgang')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="vorgang"
-          placeholder="Welcher Vorgang?"
+          placeholder=""
           items={vorgaengeListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorgangsnummer ?? r.record_id),
@@ -485,7 +485,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="grundlage_anforderungen">{fieldLabel('entscheidungen_und_freigaben', 'grundlage_anforderungen')}</Label>
         <MultiCombobox
           id="grundlage_anforderungen"
-          placeholder="Welche Anforderungen?"
+          placeholder=""
           items={anforderungenUndAngabenListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.bezeichnung ?? r.record_id),
@@ -502,7 +502,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="beurteilung">{fieldLabel('entscheidungen_und_freigaben', 'beurteilung')}</Label>
         <Combobox
           id="beurteilung"
-          placeholder="Welche Beurteilung?"
+          placeholder=""
           items={fachlicheBeurteilungenListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.beurteilungstext ?? r.record_id),
@@ -519,7 +519,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="regel">{fieldLabel('entscheidungen_und_freigaben', 'regel')}</Label>
         <Combobox
           id="regel"
-          placeholder="Welche Regel gilt?"
+          placeholder=""
           items={regelnUndBefugnisseListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.regelbezeichnung ?? r.record_id),
@@ -536,7 +536,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="entscheider">{fieldLabel('entscheidungen_und_freigaben', 'entscheider')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="entscheider"
-          placeholder="Wer entscheidet?"
+          placeholder=""
           items={beteiligteListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorname ?? r.record_id),
@@ -569,7 +569,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="unsicherheiten">{fieldLabel('entscheidungen_und_freigaben', 'unsicherheiten')}</Label>
         <Textarea
           id="unsicherheiten"
-          placeholder="Was ist noch unklar?"
+          placeholder=""
           value={fields.unsicherheiten ?? ''}
           onChange={e => setFields(f => ({ ...f, unsicherheiten: e.target.value }))}
           rows={3}
@@ -581,7 +581,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="vorschlag">{fieldLabel('entscheidungen_und_freigaben', 'vorschlag')}</Label>
         <Textarea
           id="vorschlag"
-          placeholder="Was wird vorgeschlagen?"
+          placeholder=""
           value={fields.vorschlag ?? ''}
           onChange={e => setFields(f => ({ ...f, vorschlag: e.target.value }))}
           rows={3}
@@ -593,7 +593,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="entscheidung">{fieldLabel('entscheidungen_und_freigaben', 'entscheidung')}</Label>
         <Textarea
           id="entscheidung"
-          placeholder="Was wurde entschieden?"
+          placeholder=""
           value={fields.entscheidung ?? ''}
           onChange={e => setFields(f => ({ ...f, entscheidung: e.target.value }))}
           rows={3}
@@ -605,7 +605,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="begruendung">{fieldLabel('entscheidungen_und_freigaben', 'begruendung')}</Label>
         <Textarea
           id="begruendung"
-          placeholder="Warum so entschieden?"
+          placeholder=""
           value={fields.begruendung ?? ''}
           onChange={e => setFields(f => ({ ...f, begruendung: e.target.value }))}
           rows={3}
@@ -617,7 +617,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="folgen">{fieldLabel('entscheidungen_und_freigaben', 'folgen')}</Label>
         <Textarea
           id="folgen"
-          placeholder="Welche Folgen entstehen?"
+          placeholder=""
           value={fields.folgen ?? ''}
           onChange={e => setFields(f => ({ ...f, folgen: e.target.value }))}
           rows={3}
@@ -691,7 +691,7 @@ export function EntscheidungenUndFreigabenDialog({ open, onClose, onSubmit, defa
         <Label htmlFor="entscheidungsdatum">{fieldLabel('entscheidungen_und_freigaben', 'entscheidungsdatum')}</Label>
         <DatePicker
           id="entscheidungsdatum"
-          placeholder="Wann wurde entschieden?"
+          placeholder=""
           mode="date"
           value={fields.entscheidungsdatum ?? null}
           onChange={v => setFields(f => ({ ...f, entscheidungsdatum: v ?? undefined }))}

@@ -1,7 +1,7 @@
 /**
  * useBeurteilungVorbereitenFlow — the plumbing of the flow « Beurteilung vorbereiten », generated from the plan.
  *
- * Writes `fachliche_beurteilungen`: asks `vorgang`, `anforderung`, `beurteiler`, `fachbereich`, `beurteilungstext`, `ergebnis`, `unsicherheiten`; sets `gueltigkeitsstatus`, `beurteilungsdatum` itself.
+ * Writes `fachliche_beurteilungen`: asks `vorgang`, `ergebnis`, `beurteiler`, `anforderung`, `fachbereich`, `unsicherheiten`, `beurteilungstext`; sets `beurteilungsdatum`, `gueltigkeitsstatus` itself.
 Changes `vorgaenge`: the record to change is picked (`flow.pick('vorgaenge')`), the form is prefilled with its values; ; sets `prozessschritt` itself.
  * The hook OWNS: the form(s) with exactly these fields and the plan's required
  * ingredients, one record search per picked field (columns and filter from
@@ -17,18 +17,18 @@ Changes `vorgaenge`: the record to change is picked (`flow.pick('vorgaenge')`), 
  *   messages  the sentence for an empty required field, per field
  *
  *   const flow = useBeurteilungVorbereitenFlow({
- *     steps: { vorgaenge: 1, vorgang: 2, anforderung: 3, beurteiler: 4, fachbereich: 5, beurteilungstext: 5, ergebnis: 5, unsicherheiten: 5 },
+ *     steps: { vorgaenge: 1, vorgang: 2, beurteiler: 3, anforderung: 4, ergebnis: 5, fachbereich: 5, unsicherheiten: 5, beurteilungstext: 5 },
  *     items: { vorgang: r => ({ id: r.id, title: fieldText(r, 'vorgangsnummer') }) },
  *   });
  *   <IntentWizardShell forms={flow.forms} draftKey={flow.draftKey} …>
  *     <EntitySelectStep {...flow.picks.vorgang.select} {...flow.pick('vorgang')} />
- *     <EntitySelectStep {...flow.picks.anforderung.select} {...flow.pick('anforderung')} />
  *     <EntitySelectStep {...flow.picks.beurteiler.select} {...flow.pick('beurteiler')} />
+ *     <EntitySelectStep {...flow.picks.anforderung.select} {...flow.pick('anforderung')} />
  *     // the record this flow changes: <EntitySelectStep {...flow.picks.vorgaenge.select} {...flow.pick('vorgaenge')} />
- *     <Bound form={flow.forms.fachliche_beurteilungen} name="fachbereich" />
- *     <Bound form={flow.forms.fachliche_beurteilungen} name="beurteilungstext" />
  *     <Bound form={flow.forms.fachliche_beurteilungen} name="ergebnis" />
+ *     <Bound form={flow.forms.fachliche_beurteilungen} name="fachbereich" />
  *     <Bound form={flow.forms.fachliche_beurteilungen} name="unsicherheiten" />
+ *     <Bound form={flow.forms.fachliche_beurteilungen} name="beurteilungstext" />
  *     <StepNav onNext={() => flow.validateStep(n)} />
  *     {!flow.submit.done && <SummaryStep forms={flow.formList} submit={flow.submit} />}
  *     {flow.submit.result && <SuccessStep result={flow.submit.result} forms={flow.formList} submit={flow.submit} />}
@@ -62,13 +62,13 @@ export interface BeurteilungVorbereitenFlowOptions {
   /** How a search hit reads — the card's title/subtitle/status per pick. */
   items?: {
     vorgang?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
-    anforderung?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
     beurteiler?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
+    anforderung?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
     vorgaenge?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
   };
 }
 
-const DEFAULT_STEPS: Record<string, number> = {"anforderung": 3, "beurteiler": 4, "beurteilungstext": 5, "ergebnis": 5, "fachbereich": 5, "unsicherheiten": 5, "vorgaenge": 1, "vorgang": 2};
+const DEFAULT_STEPS: Record<string, number> = {"anforderung": 4, "beurteiler": 3, "beurteilungstext": 5, "ergebnis": 5, "fachbereich": 5, "unsicherheiten": 5, "vorgaenge": 1, "vorgang": 2};
 export const BEURTEILUNGVORBEREITEN_REVIEW_STEP = 6;
 
 function fromPick<T>(pick: { recordOf(id: string): JourneyRecord | undefined }, form: StepForm, field: string, read: (r: JourneyRecord) => T): T | undefined {
@@ -101,10 +101,10 @@ export function useBeurteilungVorbereitenFlow(options: BeurteilungVorbereitenFlo
   const steps = { ...DEFAULT_STEPS, ...(options.steps ?? {}) } as Record<string, number>;
   const [vorgaengeTargetId, setVorgaengeTargetId] = useState<string | null>(null);
   const fachliche_beurteilungen = useStepForm('fachliche_beurteilungen', {
-    fields: ["vorgang", "anforderung", "beurteiler", "fachbereich", "beurteilungstext", "ergebnis", "unsicherheiten"],
-    steps: only(steps, ["vorgang", "anforderung", "beurteiler", "fachbereich", "beurteilungstext", "ergebnis", "unsicherheiten"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["vorgang", "anforderung", "beurteiler", "fachbereich", "beurteilungstext", "ergebnis", "unsicherheiten"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["vorgang", "anforderung", "beurteiler", "fachbereich", "beurteilungstext", "ergebnis", "unsicherheiten"]),
+    fields: ["vorgang", "ergebnis", "beurteiler", "anforderung", "fachbereich", "unsicherheiten", "beurteilungstext"],
+    steps: only(steps, ["vorgang", "ergebnis", "beurteiler", "anforderung", "fachbereich", "unsicherheiten", "beurteilungstext"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["vorgang", "ergebnis", "beurteiler", "anforderung", "fachbereich", "unsicherheiten", "beurteilungstext"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["vorgang", "ergebnis", "beurteiler", "anforderung", "fachbereich", "unsicherheiten", "beurteilungstext"]),
   });
   const vorgaenge = useStepForm('vorgaenge', {
     fields: [],
@@ -124,15 +124,15 @@ export function useBeurteilungVorbereitenFlow(options: BeurteilungVorbereitenFlo
       searchFields: ["vorgangsnummer"] as never,
       toItem: options.items?.vorgang as never,
     })),
+    beurteiler: useRecordSearch(servicePort, 'beteiligte', withPickPolicy('beurteiler', {
+      searchFields: ["nachname", "zustaendigkeit"] as never,
+      toItem: options.items?.beurteiler as never,
+    })),
     anforderung: useRecordSearch(servicePort, 'anforderungen_und_angaben', withPickPolicy('anforderung', {
       searchFields: ["bezeichnung", "angabe"] as never,
       filter: "r.v_angabestatus != 'bestaetigt'",
       where: (r: JourneyRecord) => (fieldLookup(r, "angabestatus")?.key ?? null) !== "bestaetigt",
       toItem: options.items?.anforderung as never,
-    })),
-    beurteiler: useRecordSearch(servicePort, 'beteiligte', withPickPolicy('beurteiler', {
-      searchFields: ["nachname", "zustaendigkeit"] as never,
-      toItem: options.items?.beurteiler as never,
     })),
     vorgaenge: useRecordSearch(servicePort, 'vorgaenge', withPickPolicy('vorgaenge', {
       searchFields: ["vorgangsnummer"] as never,
@@ -155,8 +155,8 @@ export function useBeurteilungVorbereitenFlow(options: BeurteilungVorbereitenFlo
   });
   const picks = {
     vorgang: { ...searches.vorgang, select: { ...searches.vorgang.select, create: false as boolean, hint: hintFor('vorgang', 'vorgaenge', null as PickWhere | null) } },
-    anforderung: { ...searches.anforderung, select: { ...searches.anforderung.select, create: false as boolean, hint: hintFor('anforderung', 'anforderungen_und_angaben', {"conditions": [{"field": "angabestatus", "op": "ne", "value": "bestaetigt"}], "mode": "all"} as PickWhere | null) } },
     beurteiler: { ...searches.beurteiler, select: { ...searches.beurteiler.select, create: false as boolean, hint: hintFor('beurteiler', 'beteiligte', null as PickWhere | null) } },
+    anforderung: { ...searches.anforderung, select: { ...searches.anforderung.select, create: false as boolean, hint: hintFor('anforderung', 'anforderungen_und_angaben', {"conditions": [{"field": "angabestatus", "op": "ne", "value": "bestaetigt"}], "mode": "all"} as PickWhere | null) } },
     vorgaenge: { ...searches.vorgaenge, select: { ...searches.vorgaenge.select, create: false as boolean, hint: hintFor('vorgaenge', 'vorgaenge', null as PickWhere | null) } },
   };
 
@@ -164,8 +164,8 @@ export function useBeurteilungVorbereitenFlow(options: BeurteilungVorbereitenFlo
     {
       key: 'fachliche_beurteilungen', entity: 'fachliche_beurteilungen', form: fachliche_beurteilungen, primary: true,
       values: (): FormValues => ({
-        gueltigkeitsstatus: policyFixedValue('fachliche_beurteilungen', 'gueltigkeitsstatus') ?? "entwurf",
         beurteilungsdatum: policyFixedValue('fachliche_beurteilungen', 'beurteilungsdatum') ?? todayIso(),
+        gueltigkeitsstatus: policyFixedValue('fachliche_beurteilungen', 'gueltigkeitsstatus') ?? "entwurf",
       }),
 
       // the review shows what this step sets itself — changeable on „Deine Anwendung“, not here

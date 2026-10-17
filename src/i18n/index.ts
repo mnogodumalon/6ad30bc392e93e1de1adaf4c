@@ -1865,7 +1865,7 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
     "appgroup": "Inquiry and Quotation Management",
     "apps": {
       "beteiligte": {
-        "name": "Parties Involved",
+        "name": "Stakeholders",
         "app_id": "6ad30b8e0042e397617f53a8",
         "fields": {
           "vorname": "First Name",
@@ -1875,14 +1875,14 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
           "zustaendigkeit": "Area of Responsibility",
           "email": "Email",
           "telefon": "Phone",
-          "entscheidungsbefugt": "Authorized to Decide",
+          "entscheidungsbefugt": "Decision Authority",
           "befugnisgrenzen": "Authority Limits"
         },
         "lookups": {
           "rolle": {
             "vertrieb": "Sales",
             "konstruktion": "Engineering",
-            "arbeitsvorbereitung": "Work Preparation",
+            "arbeitsvorbereitung": "Production Planning",
             "qualitaetssicherung": "Quality Assurance",
             "kunde": "Customer",
             "sonstige": "Other"
@@ -1924,13 +1924,13 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
         },
         "lookups": {
           "regelart": {
-            "verbindlich": "Binding",
+            "verbindlich": "Mandatory",
             "empfehlung": "Recommendation"
           },
           "berechtigte_rolle": {
             "vertrieb": "Sales",
             "konstruktion": "Engineering",
-            "arbeitsvorbereitung": "Work Preparation",
+            "arbeitsvorbereitung": "Production Planning",
             "qualitaetssicherung": "Quality Assurance",
             "geschaeftsleitung": "Management"
           },
@@ -1947,7 +1947,7 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
           "uebergabestatus": "Handover Status",
           "vorgangsnummer": "Case Number",
           "kunde": "Customer",
-          "bearbeiter": "Handler",
+          "bearbeiter": "Processor",
           "eingangsdatum": "Date Received",
           "kundenanfrage": "Customer Inquiry",
           "prozessschritt": "Process Step",
@@ -1968,7 +1968,7 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
             "anfrage_verstehen": "Understand Inquiry",
             "informationen_pruefen": "Review Information",
             "beurteilungen_vorbereiten": "Prepare Assessments",
-            "beteiligte_einbeziehen": "Involve Parties",
+            "beteiligte_einbeziehen": "Involve Stakeholders",
             "kommunikation_organisieren": "Organize Communication",
             "entscheidungen_treffen": "Make Decisions",
             "auftragsentwurf": "Order Draft",
@@ -2006,7 +2006,7 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
         }
       },
       "fachliche_beurteilungen": {
-        "name": "Technical Assessments",
+        "name": "Professional Assessments",
         "app_id": "6ad30b963ba9b811867e67e7",
         "fields": {
           "vorgang": "Case",
@@ -2023,19 +2023,19 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
           "fachbereich": {
             "vertrieb": "Sales",
             "konstruktion": "Engineering",
-            "arbeitsvorbereitung": "Work Preparation",
+            "arbeitsvorbereitung": "Production Planning",
             "qualitaetssicherung": "Quality Assurance"
           },
           "gueltigkeitsstatus": {
             "entwurf": "Draft",
             "ki_vorschlag": "AI Suggestion",
-            "fachlich_bestaetigt": "Technically Confirmed",
+            "fachlich_bestaetigt": "Professionally Confirmed",
             "verworfen": "Discarded"
           }
         }
       },
       "rueckfragen": {
-        "name": "Queries",
+        "name": "Follow-up Questions",
         "app_id": "6ad30b97569dcebe35a88423",
         "fields": {
           "vorgang": "Case",
@@ -2064,7 +2064,7 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
         "fields": {
           "vorgang": "Case",
           "grundlage_anforderungen": "Underlying Requirements",
-          "beurteilung": "Technical Assessment",
+          "beurteilung": "Professional Assessment",
           "regel": "Applicable Rule",
           "entscheider": "Decision Maker",
           "befugnis_geprueft": "Decision Authority Checked",
@@ -2119,8 +2119,8 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
           "art": {
             "beobachtete_tatsache": "Observed Fact",
             "ungeprueft_annahme": "Unverified Assumption",
-            "bestaetigte_erkenntnis": "Technically Confirmed Finding",
-            "verbindliche_regel": "Binding Rule",
+            "bestaetigte_erkenntnis": "Professionally Confirmed Insight",
+            "verbindliche_regel": "Mandatory Rule",
             "situative_entscheidung": "Situation-Dependent Decision"
           }
         }

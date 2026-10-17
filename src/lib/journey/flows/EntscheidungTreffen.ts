@@ -1,7 +1,7 @@
 /**
  * useEntscheidungTreffenFlow — the plumbing of the flow « Entscheidung treffen », generated from the plan.
  *
- * Writes `entscheidungen_und_freigaben`: asks `vorgang`, `grundlage_anforderungen`, `beurteilung`, `regel`, `entscheider`, `befugnis_geprueft`, `unsicherheiten`, `vorschlag`, `entscheidung`, `begruendung`, `folgen`, `freigabestatus`; sets `entscheidungsdatum` itself.
+ * Writes `entscheidungen_und_freigaben`: asks `regel`, `folgen`, `vorgang`, `vorschlag`, `begruendung`, `beurteilung`, `entscheider`, `entscheidung`, `freigabestatus`, `unsicherheiten`, `befugnis_geprueft`, `grundlage_anforderungen`; sets `entscheidungsdatum` itself.
 Changes `vorgaenge`: the record to change is picked (`flow.pick('vorgaenge')`), the form is prefilled with its values; ; sets `prozessschritt` itself.
  * The hook OWNS: the form(s) with exactly these fields and the plan's required
  * ingredients, one record search per picked field (columns and filter from
@@ -17,23 +17,23 @@ Changes `vorgaenge`: the record to change is picked (`flow.pick('vorgaenge')`), 
  *   messages  the sentence for an empty required field, per field
  *
  *   const flow = useEntscheidungTreffenFlow({
- *     steps: { vorgaenge: 1, vorgang: 2, grundlage_anforderungen: 3, beurteilung: 4, regel: 5, entscheider: 6, befugnis_geprueft: 7, unsicherheiten: 7, vorschlag: 7, entscheidung: 7, begruendung: 7, folgen: 7, freigabestatus: 7 },
- *     items: { vorgang: r => ({ id: r.id, title: fieldText(r, 'vorgangsnummer') }) },
+ *     steps: { vorgaenge: 1, regel: 2, vorgang: 3, beurteilung: 4, entscheider: 5, grundlage_anforderungen: 6, folgen: 7, vorschlag: 7, begruendung: 7, entscheidung: 7, freigabestatus: 7, unsicherheiten: 7, befugnis_geprueft: 7 },
+ *     items: { regel: r => ({ id: r.id, title: fieldText(r, 'regelbezeichnung') }) },
  *   });
  *   <IntentWizardShell forms={flow.forms} draftKey={flow.draftKey} …>
- *     <EntitySelectStep {...flow.picks.vorgang.select} {...flow.pick('vorgang')} />
- *     <EntitySelectStep {...flow.picks.grundlage_anforderungen.select} {...flow.pickMany('grundlage_anforderungen')} />
- *     <EntitySelectStep {...flow.picks.beurteilung.select} {...flow.pick('beurteilung')} />
  *     <EntitySelectStep {...flow.picks.regel.select} {...flow.pick('regel')} />
+ *     <EntitySelectStep {...flow.picks.vorgang.select} {...flow.pick('vorgang')} />
+ *     <EntitySelectStep {...flow.picks.beurteilung.select} {...flow.pick('beurteilung')} />
  *     <EntitySelectStep {...flow.picks.entscheider.select} {...flow.pick('entscheider')} />
+ *     <EntitySelectStep {...flow.picks.grundlage_anforderungen.select} {...flow.pickMany('grundlage_anforderungen')} />
  *     // the record this flow changes: <EntitySelectStep {...flow.picks.vorgaenge.select} {...flow.pick('vorgaenge')} />
- *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="befugnis_geprueft" />
- *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="unsicherheiten" />
- *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="vorschlag" />
- *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="entscheidung" />
- *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="begruendung" />
  *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="folgen" />
+ *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="vorschlag" />
+ *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="begruendung" />
+ *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="entscheidung" />
  *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="freigabestatus" />
+ *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="unsicherheiten" />
+ *     <Bound form={flow.forms.entscheidungen_und_freigaben} name="befugnis_geprueft" />
  *     <StepNav onNext={() => flow.validateStep(n)} />
  *     {!flow.submit.done && <SummaryStep forms={flow.formList} submit={flow.submit} />}
  *     {flow.submit.result && <SuccessStep result={flow.submit.result} forms={flow.formList} submit={flow.submit} />}
@@ -66,16 +66,16 @@ export interface EntscheidungTreffenFlowOptions {
   messages?: Partial<Record<Key, string>>;
   /** How a search hit reads — the card's title/subtitle/status per pick. */
   items?: {
-    vorgang?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
-    grundlage_anforderungen?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
-    beurteilung?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
     regel?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
+    vorgang?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
+    beurteilung?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
     entscheider?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
+    grundlage_anforderungen?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
     vorgaenge?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
   };
 }
 
-const DEFAULT_STEPS: Record<string, number> = {"befugnis_geprueft": 7, "begruendung": 7, "beurteilung": 4, "entscheider": 6, "entscheidung": 7, "folgen": 7, "freigabestatus": 7, "grundlage_anforderungen": 3, "regel": 5, "unsicherheiten": 7, "vorgaenge": 1, "vorgang": 2, "vorschlag": 7};
+const DEFAULT_STEPS: Record<string, number> = {"befugnis_geprueft": 7, "begruendung": 7, "beurteilung": 4, "entscheider": 5, "entscheidung": 7, "folgen": 7, "freigabestatus": 7, "grundlage_anforderungen": 6, "regel": 2, "unsicherheiten": 7, "vorgaenge": 1, "vorgang": 3, "vorschlag": 7};
 export const ENTSCHEIDUNGTREFFEN_REVIEW_STEP = 8;
 
 function fromPick<T>(pick: { recordOf(id: string): JourneyRecord | undefined }, form: StepForm, field: string, read: (r: JourneyRecord) => T): T | undefined {
@@ -108,10 +108,10 @@ export function useEntscheidungTreffenFlow(options: EntscheidungTreffenFlowOptio
   const steps = { ...DEFAULT_STEPS, ...(options.steps ?? {}) } as Record<string, number>;
   const [vorgaengeTargetId, setVorgaengeTargetId] = useState<string | null>(null);
   const entscheidungen_und_freigaben = useStepForm('entscheidungen_und_freigaben', {
-    fields: ["vorgang", "grundlage_anforderungen", "beurteilung", "regel", "entscheider", "befugnis_geprueft", "unsicherheiten", "vorschlag", "entscheidung", "begruendung", "folgen", "freigabestatus"],
-    steps: only(steps, ["vorgang", "grundlage_anforderungen", "beurteilung", "regel", "entscheider", "befugnis_geprueft", "unsicherheiten", "vorschlag", "entscheidung", "begruendung", "folgen", "freigabestatus"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["vorgang", "grundlage_anforderungen", "beurteilung", "regel", "entscheider", "befugnis_geprueft", "unsicherheiten", "vorschlag", "entscheidung", "begruendung", "folgen", "freigabestatus"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["vorgang", "grundlage_anforderungen", "beurteilung", "regel", "entscheider", "befugnis_geprueft", "unsicherheiten", "vorschlag", "entscheidung", "begruendung", "folgen", "freigabestatus"]),
+    fields: ["regel", "folgen", "vorgang", "vorschlag", "begruendung", "beurteilung", "entscheider", "entscheidung", "freigabestatus", "unsicherheiten", "befugnis_geprueft", "grundlage_anforderungen"],
+    steps: only(steps, ["regel", "folgen", "vorgang", "vorschlag", "begruendung", "beurteilung", "entscheider", "entscheidung", "freigabestatus", "unsicherheiten", "befugnis_geprueft", "grundlage_anforderungen"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["regel", "folgen", "vorgang", "vorschlag", "begruendung", "beurteilung", "entscheider", "entscheidung", "freigabestatus", "unsicherheiten", "befugnis_geprueft", "grundlage_anforderungen"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["regel", "folgen", "vorgang", "vorschlag", "begruendung", "beurteilung", "entscheider", "entscheidung", "freigabestatus", "unsicherheiten", "befugnis_geprueft", "grundlage_anforderungen"]),
   });
   const vorgaenge = useStepForm('vorgaenge', {
     fields: [],
@@ -127,13 +127,15 @@ export function useEntscheidungTreffenFlow(options: EntscheidungTreffenFlowOptio
   // render time, so a change works on the running application.
   usePolicyVersion();
   const searches = {
+    regel: useRecordSearch(servicePort, 'regeln_und_befugnisse', withPickPolicy('regel', {
+      searchFields: ["regelbezeichnung"] as never,
+      filter: "r.v_status == 'aktiv'",
+      where: (r: JourneyRecord) => (fieldLookup(r, "status")?.key ?? null) === "aktiv",
+      toItem: options.items?.regel as never,
+    })),
     vorgang: useRecordSearch(servicePort, 'vorgaenge', withPickPolicy('vorgang', {
       searchFields: ["vorgangsnummer"] as never,
       toItem: options.items?.vorgang as never,
-    })),
-    grundlage_anforderungen: useRecordSearch(servicePort, 'anforderungen_und_angaben', withPickPolicy('grundlage_anforderungen', {
-      searchFields: ["bezeichnung"] as never,
-      toItem: options.items?.grundlage_anforderungen as never,
     })),
     beurteilung: useRecordSearch(servicePort, 'fachliche_beurteilungen', withPickPolicy('beurteilung', {
       searchFields: ["beurteilungstext"] as never,
@@ -141,17 +143,15 @@ export function useEntscheidungTreffenFlow(options: EntscheidungTreffenFlowOptio
       where: (r: JourneyRecord) => (fieldLookup(r, "gueltigkeitsstatus")?.key ?? null) !== "verworfen",
       toItem: options.items?.beurteilung as never,
     })),
-    regel: useRecordSearch(servicePort, 'regeln_und_befugnisse', withPickPolicy('regel', {
-      searchFields: ["regelbezeichnung"] as never,
-      filter: "r.v_status == 'aktiv'",
-      where: (r: JourneyRecord) => (fieldLookup(r, "status")?.key ?? null) === "aktiv",
-      toItem: options.items?.regel as never,
-    })),
     entscheider: useRecordSearch(servicePort, 'beteiligte', withPickPolicy('entscheider', {
       searchFields: ["nachname", "befugnisgrenzen"] as never,
       filter: "r.v_entscheidungsbefugt == True",
       where: (r: JourneyRecord) => r.fields["entscheidungsbefugt"] === true,
       toItem: options.items?.entscheider as never,
+    })),
+    grundlage_anforderungen: useRecordSearch(servicePort, 'anforderungen_und_angaben', withPickPolicy('grundlage_anforderungen', {
+      searchFields: ["bezeichnung"] as never,
+      toItem: options.items?.grundlage_anforderungen as never,
     })),
     vorgaenge: useRecordSearch(servicePort, 'vorgaenge', withPickPolicy('vorgaenge', {
       searchFields: ["vorgangsnummer"] as never,
@@ -173,11 +173,11 @@ export function useEntscheidungTreffenFlow(options: EntscheidungTreffenFlowOptio
     href: `#/verwaltung/anwendung?line=intent:entscheidung-treffen:write:${entity}.${field}`,
   });
   const picks = {
-    vorgang: { ...searches.vorgang, select: { ...searches.vorgang.select, create: false as boolean, hint: hintFor('vorgang', 'vorgaenge', null as PickWhere | null) } },
-    grundlage_anforderungen: { ...searches.grundlage_anforderungen, select: { ...searches.grundlage_anforderungen.select, create: false as boolean, hint: hintFor('grundlage_anforderungen', 'anforderungen_und_angaben', null as PickWhere | null) } },
-    beurteilung: { ...searches.beurteilung, select: { ...searches.beurteilung.select, create: false as boolean, hint: hintFor('beurteilung', 'fachliche_beurteilungen', {"conditions": [{"field": "gueltigkeitsstatus", "op": "ne", "value": "verworfen"}], "mode": "all"} as PickWhere | null) } },
     regel: { ...searches.regel, select: { ...searches.regel.select, create: false as boolean, hint: hintFor('regel', 'regeln_und_befugnisse', {"conditions": [{"field": "status", "op": "eq", "value": "aktiv"}], "mode": "all"} as PickWhere | null) } },
+    vorgang: { ...searches.vorgang, select: { ...searches.vorgang.select, create: false as boolean, hint: hintFor('vorgang', 'vorgaenge', null as PickWhere | null) } },
+    beurteilung: { ...searches.beurteilung, select: { ...searches.beurteilung.select, create: false as boolean, hint: hintFor('beurteilung', 'fachliche_beurteilungen', {"conditions": [{"field": "gueltigkeitsstatus", "op": "ne", "value": "verworfen"}], "mode": "all"} as PickWhere | null) } },
     entscheider: { ...searches.entscheider, select: { ...searches.entscheider.select, create: false as boolean, hint: hintFor('entscheider', 'beteiligte', {"conditions": [{"field": "entscheidungsbefugt", "op": "eq", "value": "true"}], "mode": "all"} as PickWhere | null) } },
+    grundlage_anforderungen: { ...searches.grundlage_anforderungen, select: { ...searches.grundlage_anforderungen.select, create: false as boolean, hint: hintFor('grundlage_anforderungen', 'anforderungen_und_angaben', null as PickWhere | null) } },
     vorgaenge: { ...searches.vorgaenge, select: { ...searches.vorgaenge.select, create: false as boolean, hint: hintFor('vorgaenge', 'vorgaenge', null as PickWhere | null) } },
   };
 

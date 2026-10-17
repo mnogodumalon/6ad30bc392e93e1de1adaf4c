@@ -385,7 +385,7 @@ export function ErfahrungenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="vorgang">{fieldLabel('erfahrungen', 'vorgang')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="vorgang"
-          placeholder="Welcher Vorgang?"
+          placeholder=""
           items={vorgaengeListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorgangsnummer ?? r.record_id),
@@ -405,7 +405,7 @@ export function ErfahrungenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="titel">{fieldLabel('erfahrungen', 'titel')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="titel"
-          placeholder="z. B. Rückfragen zu Maßen"
+          placeholder=""
           value={fields.titel ?? ''}
           onChange={e => setFields(f => ({ ...f, titel: e.target.value }))}
           required
@@ -422,7 +422,7 @@ export function ErfahrungenDialog({ open, onClose, onSubmit, defaultValues, reco
           value={lookupKey(fields.kategorie) ?? ''}
           onValueChange={v => setFields(f => ({ ...f, kategorie: v === 'none' ? undefined : v as any }))}
         >
-          <SelectTrigger id="kategorie" className="max-sm:h-11"><SelectValue placeholder="z. B. Fehler, Verzögerung" /></SelectTrigger>
+          <SelectTrigger id="kategorie" className="max-sm:h-11"><SelectValue placeholder="" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="none">—</SelectItem>
             <SelectItem value="bewaehrte_routine">{lookupLabel('erfahrungen', 'kategorie', 'bewaehrte_routine') ?? 'Bewährte Routine'}</SelectItem>
@@ -441,7 +441,7 @@ export function ErfahrungenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="beschreibung">{fieldLabel('erfahrungen', 'beschreibung')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Textarea
           id="beschreibung"
-          placeholder="Was ist passiert?"
+          placeholder=""
           value={fields.beschreibung ?? ''}
           onChange={e => setFields(f => ({ ...f, beschreibung: e.target.value }))}
           rows={3}
@@ -456,7 +456,7 @@ export function ErfahrungenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="ursache">{fieldLabel('erfahrungen', 'ursache')}</Label>
         <Textarea
           id="ursache"
-          placeholder="Woran lag es?"
+          placeholder=""
           value={fields.ursache ?? ''}
           onChange={e => setFields(f => ({ ...f, ursache: e.target.value }))}
           rows={3}
@@ -468,7 +468,7 @@ export function ErfahrungenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="verbesserungsvorschlag">{fieldLabel('erfahrungen', 'verbesserungsvorschlag')}</Label>
         <Textarea
           id="verbesserungsvorschlag"
-          placeholder="Was würde helfen?"
+          placeholder=""
           value={fields.verbesserungsvorschlag ?? ''}
           onChange={e => setFields(f => ({ ...f, verbesserungsvorschlag: e.target.value }))}
           rows={3}
@@ -539,7 +539,7 @@ export function ErfahrungenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="pruefer">{fieldLabel('erfahrungen', 'pruefer')}</Label>
         <Combobox
           id="pruefer"
-          placeholder="Wer prüft?"
+          placeholder=""
           items={beteiligteListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorname ?? r.record_id),

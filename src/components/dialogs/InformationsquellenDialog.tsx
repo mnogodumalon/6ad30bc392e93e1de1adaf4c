@@ -349,7 +349,7 @@ export function InformationsquellenDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="bezeichnung">{fieldLabel('informationsquellen', 'bezeichnung')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="bezeichnung"
-          placeholder="z. B. Kundenstamm in Excel"
+          placeholder=""
           value={fields.bezeichnung ?? ''}
           onChange={e => setFields(f => ({ ...f, bezeichnung: e.target.value }))}
           required
@@ -426,7 +426,7 @@ export function InformationsquellenDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="beschreibung">{fieldLabel('informationsquellen', 'beschreibung')}</Label>
         <Textarea
           id="beschreibung"
-          placeholder="Was enthält die Quelle?"
+          placeholder=""
           value={fields.beschreibung ?? ''}
           onChange={e => setFields(f => ({ ...f, beschreibung: e.target.value }))}
           rows={3}
@@ -438,7 +438,7 @@ export function InformationsquellenDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="verantwortlicher">{fieldLabel('informationsquellen', 'verantwortlicher')}</Label>
         <Combobox
           id="verantwortlicher"
-          placeholder="Wer ist zuständig?"
+          placeholder=""
           items={beteiligteListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorname ?? r.record_id),
@@ -455,7 +455,7 @@ export function InformationsquellenDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="bekannte_schwaechen">{fieldLabel('informationsquellen', 'bekannte_schwaechen')}</Label>
         <Textarea
           id="bekannte_schwaechen"
-          placeholder="Eine Schwäche pro Zeile"
+          placeholder=""
           value={fields.bekannte_schwaechen ?? ''}
           onChange={e => setFields(f => ({ ...f, bekannte_schwaechen: e.target.value }))}
           rows={3}

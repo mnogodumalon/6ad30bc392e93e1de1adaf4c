@@ -1,7 +1,7 @@
 /**
  * useRueckfrageStellenFlow — the plumbing of the flow « Rückfrage bündeln und stellen », generated from the plan.
  *
- * Writes `rueckfragen`: asks `vorgang`, `anforderungen`, `adressat`, `fragetext`, `buendelkennung`; sets `status` itself.
+ * Writes `rueckfragen`: asks `vorgang`, `adressat`, `fragetext`, `anforderungen`, `buendelkennung`; sets `status` itself.
 Changes `vorgaenge`: the record to change is picked (`flow.pick('vorgaenge')`), the form is prefilled with its values; ; sets `prozessschritt` itself.
  * The hook OWNS: the form(s) with exactly these fields and the plan's required
  * ingredients, one record search per picked field (columns and filter from
@@ -17,13 +17,13 @@ Changes `vorgaenge`: the record to change is picked (`flow.pick('vorgaenge')`), 
  *   messages  the sentence for an empty required field, per field
  *
  *   const flow = useRueckfrageStellenFlow({
- *     steps: { vorgaenge: 1, vorgang: 2, anforderungen: 3, adressat: 4, fragetext: 5, buendelkennung: 5 },
+ *     steps: { vorgaenge: 1, vorgang: 2, adressat: 3, anforderungen: 4, fragetext: 5, buendelkennung: 5 },
  *     items: { vorgang: r => ({ id: r.id, title: fieldText(r, 'vorgangsnummer') }) },
  *   });
  *   <IntentWizardShell forms={flow.forms} draftKey={flow.draftKey} …>
  *     <EntitySelectStep {...flow.picks.vorgang.select} {...flow.pick('vorgang')} />
- *     <EntitySelectStep {...flow.picks.anforderungen.select} {...flow.pickMany('anforderungen')} />
  *     <EntitySelectStep {...flow.picks.adressat.select} {...flow.pick('adressat')} />
+ *     <EntitySelectStep {...flow.picks.anforderungen.select} {...flow.pickMany('anforderungen')} />
  *     // the record this flow changes: <EntitySelectStep {...flow.picks.vorgaenge.select} {...flow.pick('vorgaenge')} />
  *     <Bound form={flow.forms.rueckfragen} name="fragetext" />
  *     <Bound form={flow.forms.rueckfragen} name="buendelkennung" />
@@ -60,13 +60,13 @@ export interface RueckfrageStellenFlowOptions {
   /** How a search hit reads — the card's title/subtitle/status per pick. */
   items?: {
     vorgang?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
-    anforderungen?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
     adressat?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
+    anforderungen?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
     vorgaenge?: (record: JourneyRecord, ctx: RefContext) => SelectItemLike;
   };
 }
 
-const DEFAULT_STEPS: Record<string, number> = {"adressat": 4, "anforderungen": 3, "buendelkennung": 5, "fragetext": 5, "vorgaenge": 1, "vorgang": 2};
+const DEFAULT_STEPS: Record<string, number> = {"adressat": 3, "anforderungen": 4, "buendelkennung": 5, "fragetext": 5, "vorgaenge": 1, "vorgang": 2};
 export const RUECKFRAGESTELLEN_REVIEW_STEP = 6;
 
 function fromPick<T>(pick: { recordOf(id: string): JourneyRecord | undefined }, form: StepForm, field: string, read: (r: JourneyRecord) => T): T | undefined {
@@ -99,10 +99,10 @@ export function useRueckfrageStellenFlow(options: RueckfrageStellenFlowOptions =
   const steps = { ...DEFAULT_STEPS, ...(options.steps ?? {}) } as Record<string, number>;
   const [vorgaengeTargetId, setVorgaengeTargetId] = useState<string | null>(null);
   const rueckfragen = useStepForm('rueckfragen', {
-    fields: ["vorgang", "anforderungen", "adressat", "fragetext", "buendelkennung"],
-    steps: only(steps, ["vorgang", "anforderungen", "adressat", "fragetext", "buendelkennung"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["vorgang", "anforderungen", "adressat", "fragetext", "buendelkennung"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["vorgang", "anforderungen", "adressat", "fragetext", "buendelkennung"]),
+    fields: ["vorgang", "adressat", "fragetext", "anforderungen", "buendelkennung"],
+    steps: only(steps, ["vorgang", "adressat", "fragetext", "anforderungen", "buendelkennung"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["vorgang", "adressat", "fragetext", "anforderungen", "buendelkennung"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["vorgang", "adressat", "fragetext", "anforderungen", "buendelkennung"]),
   });
   const vorgaenge = useStepForm('vorgaenge', {
     fields: [],
@@ -122,15 +122,15 @@ export function useRueckfrageStellenFlow(options: RueckfrageStellenFlowOptions =
       searchFields: ["vorgangsnummer"] as never,
       toItem: options.items?.vorgang as never,
     })),
+    adressat: useRecordSearch(servicePort, 'beteiligte', withPickPolicy('adressat', {
+      searchFields: ["nachname", "zustaendigkeit"] as never,
+      toItem: options.items?.adressat as never,
+    })),
     anforderungen: useRecordSearch(servicePort, 'anforderungen_und_angaben', withPickPolicy('anforderungen', {
       searchFields: ["bezeichnung", "luecke_widerspruch"] as never,
       filter: "r.v_angabestatus == 'fehlend' or r.v_angabestatus == 'widerspruechlich' or r.v_angabestatus == 'ungeprueft'",
       where: (r: JourneyRecord) => (fieldLookup(r, "angabestatus")?.key ?? null) === "fehlend" || (fieldLookup(r, "angabestatus")?.key ?? null) === "widerspruechlich" || (fieldLookup(r, "angabestatus")?.key ?? null) === "ungeprueft",
       toItem: options.items?.anforderungen as never,
-    })),
-    adressat: useRecordSearch(servicePort, 'beteiligte', withPickPolicy('adressat', {
-      searchFields: ["nachname", "zustaendigkeit"] as never,
-      toItem: options.items?.adressat as never,
     })),
     vorgaenge: useRecordSearch(servicePort, 'vorgaenge', withPickPolicy('vorgaenge', {
       searchFields: ["vorgangsnummer"] as never,
@@ -153,8 +153,8 @@ export function useRueckfrageStellenFlow(options: RueckfrageStellenFlowOptions =
   });
   const picks = {
     vorgang: { ...searches.vorgang, select: { ...searches.vorgang.select, create: false as boolean, hint: hintFor('vorgang', 'vorgaenge', null as PickWhere | null) } },
-    anforderungen: { ...searches.anforderungen, select: { ...searches.anforderungen.select, create: false as boolean, hint: hintFor('anforderungen', 'anforderungen_und_angaben', {"conditions": [{"field": "angabestatus", "op": "eq", "value": "fehlend"}, {"field": "angabestatus", "op": "eq", "value": "widerspruechlich"}, {"field": "angabestatus", "op": "eq", "value": "ungeprueft"}], "mode": "any"} as PickWhere | null) } },
     adressat: { ...searches.adressat, select: { ...searches.adressat.select, create: false as boolean, hint: hintFor('adressat', 'beteiligte', null as PickWhere | null) } },
+    anforderungen: { ...searches.anforderungen, select: { ...searches.anforderungen.select, create: false as boolean, hint: hintFor('anforderungen', 'anforderungen_und_angaben', {"conditions": [{"field": "angabestatus", "op": "eq", "value": "fehlend"}, {"field": "angabestatus", "op": "eq", "value": "widerspruechlich"}, {"field": "angabestatus", "op": "eq", "value": "ungeprueft"}], "mode": "any"} as PickWhere | null) } },
     vorgaenge: { ...searches.vorgaenge, select: { ...searches.vorgaenge.select, create: false as boolean, hint: hintFor('vorgaenge', 'vorgaenge', null as PickWhere | null) } },
   };
 

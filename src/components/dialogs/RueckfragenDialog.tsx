@@ -409,7 +409,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="vorgang">{fieldLabel('rueckfragen', 'vorgang')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="vorgang"
-          placeholder="Welcher Vorgang?"
+          placeholder=""
           items={vorgaengeListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorgangsnummer ?? r.record_id),
@@ -429,7 +429,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="anforderungen">{fieldLabel('rueckfragen', 'anforderungen')}</Label>
         <MultiCombobox
           id="anforderungen"
-          placeholder="Welche Anforderungen sind betroffen?"
+          placeholder=""
           items={anforderungenUndAngabenListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.bezeichnung ?? r.record_id),
@@ -446,7 +446,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="adressat">{fieldLabel('rueckfragen', 'adressat')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="adressat"
-          placeholder="Wer soll antworten?"
+          placeholder=""
           items={beteiligteListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorname ?? r.record_id),
@@ -466,7 +466,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="fragetext">{fieldLabel('rueckfragen', 'fragetext')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Textarea
           id="fragetext"
-          placeholder="Was möchten Sie klären?"
+          placeholder=""
           value={fields.fragetext ?? ''}
           onChange={e => setFields(f => ({ ...f, fragetext: e.target.value }))}
           rows={3}
@@ -481,7 +481,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="buendelkennung">{fieldLabel('rueckfragen', 'buendelkennung')}</Label>
         <Input
           id="buendelkennung"
-          placeholder="z. B. RF-2026-001"
+          placeholder=""
           value={fields.buendelkennung ?? ''}
           onChange={e => setFields(f => ({ ...f, buendelkennung: e.target.value }))}
         />
@@ -554,7 +554,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="antwort">{fieldLabel('rueckfragen', 'antwort')}</Label>
         <Textarea
           id="antwort"
-          placeholder="Was wurde geantwortet?"
+          placeholder=""
           value={fields.antwort ?? ''}
           onChange={e => setFields(f => ({ ...f, antwort: e.target.value }))}
           rows={3}
@@ -566,7 +566,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="antwortdatum">{fieldLabel('rueckfragen', 'antwortdatum')}</Label>
         <DatePicker
           id="antwortdatum"
-          placeholder="Wann kam die Antwort?"
+          placeholder=""
           mode="date"
           value={fields.antwortdatum ?? null}
           onChange={v => setFields(f => ({ ...f, antwortdatum: v ?? undefined }))}
@@ -578,7 +578,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="alter_wert">{fieldLabel('rueckfragen', 'alter_wert')}</Label>
         <Input
           id="alter_wert"
-          placeholder="z. B. 120 m²"
+          placeholder=""
           value={fields.alter_wert ?? ''}
           onChange={e => setFields(f => ({ ...f, alter_wert: e.target.value }))}
         />
@@ -589,7 +589,7 @@ export function RueckfragenDialog({ open, onClose, onSubmit, defaultValues, reco
         <Label htmlFor="neuer_wert">{fieldLabel('rueckfragen', 'neuer_wert')}</Label>
         <Input
           id="neuer_wert"
-          placeholder="z. B. 135 m²"
+          placeholder=""
           value={fields.neuer_wert ?? ''}
           onChange={e => setFields(f => ({ ...f, neuer_wert: e.target.value }))}
         />

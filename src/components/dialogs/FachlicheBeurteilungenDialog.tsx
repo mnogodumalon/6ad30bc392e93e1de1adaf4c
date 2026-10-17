@@ -408,7 +408,7 @@ export function FachlicheBeurteilungenDialog({ open, onClose, onSubmit, defaultV
         <Label htmlFor="vorgang">{fieldLabel('fachliche_beurteilungen', 'vorgang')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="vorgang"
-          placeholder="Welcher Vorgang?"
+          placeholder=""
           items={vorgaengeListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorgangsnummer ?? r.record_id),
@@ -428,7 +428,7 @@ export function FachlicheBeurteilungenDialog({ open, onClose, onSubmit, defaultV
         <Label htmlFor="anforderung">{fieldLabel('fachliche_beurteilungen', 'anforderung')}</Label>
         <Combobox
           id="anforderung"
-          placeholder="Welche Anforderung?"
+          placeholder=""
           items={anforderungenUndAngabenListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.bezeichnung ?? r.record_id),
@@ -445,7 +445,7 @@ export function FachlicheBeurteilungenDialog({ open, onClose, onSubmit, defaultV
         <Label htmlFor="beurteiler">{fieldLabel('fachliche_beurteilungen', 'beurteiler')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="beurteiler"
-          placeholder="Wer beurteilt?"
+          placeholder=""
           items={beteiligteListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorname ?? r.record_id),
@@ -524,7 +524,7 @@ export function FachlicheBeurteilungenDialog({ open, onClose, onSubmit, defaultV
         <Label htmlFor="beurteilungstext">{fieldLabel('fachliche_beurteilungen', 'beurteilungstext')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Textarea
           id="beurteilungstext"
-          placeholder="Fachliche Einschätzung festhalten"
+          placeholder=""
           value={fields.beurteilungstext ?? ''}
           onChange={e => setFields(f => ({ ...f, beurteilungstext: e.target.value }))}
           rows={3}
@@ -539,7 +539,7 @@ export function FachlicheBeurteilungenDialog({ open, onClose, onSubmit, defaultV
         <Label htmlFor="ergebnis">{fieldLabel('fachliche_beurteilungen', 'ergebnis')}</Label>
         <Input
           id="ergebnis"
-          placeholder="z. B. Machbar mit Auflagen"
+          placeholder=""
           value={fields.ergebnis ?? ''}
           onChange={e => setFields(f => ({ ...f, ergebnis: e.target.value }))}
         />
@@ -550,7 +550,7 @@ export function FachlicheBeurteilungenDialog({ open, onClose, onSubmit, defaultV
         <Label htmlFor="unsicherheiten">{fieldLabel('fachliche_beurteilungen', 'unsicherheiten')}</Label>
         <Textarea
           id="unsicherheiten"
-          placeholder="Offene Punkte und Risiken"
+          placeholder=""
           value={fields.unsicherheiten ?? ''}
           onChange={e => setFields(f => ({ ...f, unsicherheiten: e.target.value }))}
           rows={3}
@@ -624,7 +624,7 @@ export function FachlicheBeurteilungenDialog({ open, onClose, onSubmit, defaultV
         <Label htmlFor="beurteilungsdatum">{fieldLabel('fachliche_beurteilungen', 'beurteilungsdatum')}</Label>
         <DatePicker
           id="beurteilungsdatum"
-          placeholder="Wann wurde beurteilt?"
+          placeholder=""
           mode="date"
           value={fields.beurteilungsdatum ?? null}
           onChange={v => setFields(f => ({ ...f, beurteilungsdatum: v ?? undefined }))}

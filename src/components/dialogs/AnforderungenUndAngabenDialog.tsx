@@ -377,7 +377,7 @@ export function AnforderungenUndAngabenDialog({ open, onClose, onSubmit, default
         <Label htmlFor="vorgang">{fieldLabel('anforderungen_und_angaben', 'vorgang')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="vorgang"
-          placeholder="Welcher Vorgang?"
+          placeholder=""
           items={vorgaengeListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorgangsnummer ?? r.record_id),
@@ -397,7 +397,7 @@ export function AnforderungenUndAngabenDialog({ open, onClose, onSubmit, default
         <Label htmlFor="bezeichnung">{fieldLabel('anforderungen_und_angaben', 'bezeichnung')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="bezeichnung"
-          placeholder="z. B. Raumgröße Besprechungsraum"
+          placeholder=""
           value={fields.bezeichnung ?? ''}
           onChange={e => setFields(f => ({ ...f, bezeichnung: e.target.value }))}
           required
@@ -412,7 +412,7 @@ export function AnforderungenUndAngabenDialog({ open, onClose, onSubmit, default
         <Label htmlFor="angabe">{fieldLabel('anforderungen_und_angaben', 'angabe')}</Label>
         <Textarea
           id="angabe"
-          placeholder="Welcher Wert wurde genannt?"
+          placeholder=""
           value={fields.angabe ?? ''}
           onChange={e => setFields(f => ({ ...f, angabe: e.target.value }))}
           rows={3}
@@ -424,7 +424,7 @@ export function AnforderungenUndAngabenDialog({ open, onClose, onSubmit, default
         <Label htmlFor="informationsquelle">{fieldLabel('anforderungen_und_angaben', 'informationsquelle')}</Label>
         <Combobox
           id="informationsquelle"
-          placeholder="Welche Quelle?"
+          placeholder=""
           items={informationsquellenListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.bezeichnung ?? r.record_id),
@@ -441,7 +441,7 @@ export function AnforderungenUndAngabenDialog({ open, onClose, onSubmit, default
         <Label htmlFor="quellenverweis">{fieldLabel('anforderungen_und_angaben', 'quellenverweis')}</Label>
         <Input
           id="quellenverweis"
-          placeholder="z. B. E-Mail vom 12.03."
+          placeholder=""
           value={fields.quellenverweis ?? ''}
           onChange={e => setFields(f => ({ ...f, quellenverweis: e.target.value }))}
         />
@@ -514,7 +514,7 @@ export function AnforderungenUndAngabenDialog({ open, onClose, onSubmit, default
         <Label htmlFor="luecke_widerspruch">{fieldLabel('anforderungen_und_angaben', 'luecke_widerspruch')}</Label>
         <Textarea
           id="luecke_widerspruch"
-          placeholder="Was fehlt oder widerspricht sich?"
+          placeholder=""
           value={fields.luecke_widerspruch ?? ''}
           onChange={e => setFields(f => ({ ...f, luecke_widerspruch: e.target.value }))}
           rows={3}
@@ -526,7 +526,7 @@ export function AnforderungenUndAngabenDialog({ open, onClose, onSubmit, default
         <Label htmlFor="unsicherheit">{fieldLabel('anforderungen_und_angaben', 'unsicherheit')}</Label>
         <Textarea
           id="unsicherheit"
-          placeholder="Was ist noch unklar?"
+          placeholder=""
           value={fields.unsicherheit ?? ''}
           onChange={e => setFields(f => ({ ...f, unsicherheit: e.target.value }))}
           rows={3}
@@ -538,7 +538,7 @@ export function AnforderungenUndAngabenDialog({ open, onClose, onSubmit, default
         <Label htmlFor="pruefpunkt">{fieldLabel('anforderungen_und_angaben', 'pruefpunkt')}</Label>
         <Textarea
           id="pruefpunkt"
-          placeholder="Was ist technisch zu prüfen?"
+          placeholder=""
           value={fields.pruefpunkt ?? ''}
           onChange={e => setFields(f => ({ ...f, pruefpunkt: e.target.value }))}
           rows={3}

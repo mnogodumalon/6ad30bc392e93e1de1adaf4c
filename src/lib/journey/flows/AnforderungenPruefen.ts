@@ -1,7 +1,7 @@
 /**
  * useAnforderungenPruefenFlow — the plumbing of the flow « Anforderungen prüfen », generated from the plan.
  *
- * Changes `anforderungen_und_angaben`: the record to change is picked (`flow.pick('anforderungen_und_angaben')`), the form is prefilled with its values; asks `angabestatus`, `luecke_widerspruch`, `unsicherheit`, `pruefpunkt`, `informationsquelle`, `quellenverweis`.
+ * Changes `anforderungen_und_angaben`: the record to change is picked (`flow.pick('anforderungen_und_angaben')`), the form is prefilled with its values; asks `pruefpunkt`, `angabestatus`, `unsicherheit`, `quellenverweis`, `informationsquelle`, `luecke_widerspruch`.
 Changes `vorgaenge`: the record to change is picked (`flow.pick('vorgaenge')`), the form is prefilled with its values; ; sets `prozessschritt` itself.
  * The hook OWNS: the form(s) with exactly these fields and the plan's required
  * ingredients, one record search per picked field (columns and filter from
@@ -17,18 +17,18 @@ Changes `vorgaenge`: the record to change is picked (`flow.pick('vorgaenge')`), 
  *   messages  the sentence for an empty required field, per field
  *
  *   const flow = useAnforderungenPruefenFlow({
- *     steps: { anforderungen_und_angaben: 1, vorgaenge: 2, informationsquelle: 3, angabestatus: 4, luecke_widerspruch: 4, unsicherheit: 4, pruefpunkt: 4, quellenverweis: 4 },
+ *     steps: { anforderungen_und_angaben: 1, vorgaenge: 2, informationsquelle: 3, pruefpunkt: 4, angabestatus: 4, unsicherheit: 4, quellenverweis: 4, luecke_widerspruch: 4 },
  *     items: { informationsquelle: r => ({ id: r.id, title: fieldText(r, 'bezeichnung') }) },
  *   });
  *   <IntentWizardShell forms={flow.forms} draftKey={flow.draftKey} …>
  *     <EntitySelectStep {...flow.picks.informationsquelle.select} {...flow.pick('informationsquelle')} />
  *     // the record this flow changes: <EntitySelectStep {...flow.picks.anforderungen_und_angaben.select} {...flow.pick('anforderungen_und_angaben')} />
  *     // the record this flow changes: <EntitySelectStep {...flow.picks.vorgaenge.select} {...flow.pick('vorgaenge')} />
- *     <Bound form={flow.forms.anforderungen_und_angaben} name="angabestatus" />
- *     <Bound form={flow.forms.anforderungen_und_angaben} name="luecke_widerspruch" />
- *     <Bound form={flow.forms.anforderungen_und_angaben} name="unsicherheit" />
  *     <Bound form={flow.forms.anforderungen_und_angaben} name="pruefpunkt" />
+ *     <Bound form={flow.forms.anforderungen_und_angaben} name="angabestatus" />
+ *     <Bound form={flow.forms.anforderungen_und_angaben} name="unsicherheit" />
  *     <Bound form={flow.forms.anforderungen_und_angaben} name="quellenverweis" />
+ *     <Bound form={flow.forms.anforderungen_und_angaben} name="luecke_widerspruch" />
  *     <StepNav onNext={() => flow.validateStep(n)} />
  *     {!flow.submit.done && <SummaryStep forms={flow.formList} submit={flow.submit} />}
  *     {flow.submit.result && <SuccessStep result={flow.submit.result} forms={flow.formList} submit={flow.submit} />}
@@ -101,10 +101,10 @@ export function useAnforderungenPruefenFlow(options: AnforderungenPruefenFlowOpt
   const [anforderungen_und_angabenTargetId, setAnforderungenUndAngabenTargetId] = useState<string | null>(null);
   const [vorgaengeTargetId, setVorgaengeTargetId] = useState<string | null>(null);
   const anforderungen_und_angaben = useStepForm('anforderungen_und_angaben', {
-    fields: ["angabestatus", "luecke_widerspruch", "unsicherheit", "pruefpunkt", "informationsquelle", "quellenverweis"],
-    steps: only(steps, ["angabestatus", "luecke_widerspruch", "unsicherheit", "pruefpunkt", "informationsquelle", "quellenverweis"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["angabestatus", "luecke_widerspruch", "unsicherheit", "pruefpunkt", "informationsquelle", "quellenverweis"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["angabestatus", "luecke_widerspruch", "unsicherheit", "pruefpunkt", "informationsquelle", "quellenverweis"]),
+    fields: ["pruefpunkt", "angabestatus", "unsicherheit", "quellenverweis", "informationsquelle", "luecke_widerspruch"],
+    steps: only(steps, ["pruefpunkt", "angabestatus", "unsicherheit", "quellenverweis", "informationsquelle", "luecke_widerspruch"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["pruefpunkt", "angabestatus", "unsicherheit", "quellenverweis", "informationsquelle", "luecke_widerspruch"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["pruefpunkt", "angabestatus", "unsicherheit", "quellenverweis", "informationsquelle", "luecke_widerspruch"]),
   });
   const vorgaenge = useStepForm('vorgaenge', {
     fields: [],
@@ -189,7 +189,7 @@ export function useAnforderungenPruefenFlow(options: AnforderungenPruefenFlowOpt
       onSelect: (id: string) => {
         setAnforderungenUndAngabenTargetId(id);
         const rec = picks.anforderungen_und_angaben.recordOf(id);
-        if (rec) anforderungen_und_angaben.reset({ angabestatus: fieldLookup(rec, "angabestatus")?.key, luecke_widerspruch: fieldText(rec, "luecke_widerspruch"), unsicherheit: fieldText(rec, "unsicherheit"), pruefpunkt: fieldText(rec, "pruefpunkt"), informationsquelle: fieldRef(rec, "informationsquelle"), quellenverweis: fieldText(rec, "quellenverweis"), });
+        if (rec) anforderungen_und_angaben.reset({ pruefpunkt: fieldText(rec, "pruefpunkt"), angabestatus: fieldLookup(rec, "angabestatus")?.key, unsicherheit: fieldText(rec, "unsicherheit"), quellenverweis: fieldText(rec, "quellenverweis"), informationsquelle: fieldRef(rec, "informationsquelle"), luecke_widerspruch: fieldText(rec, "luecke_widerspruch"), });
       },
       get record(): JourneyRecord | undefined { return anforderungen_und_angabenTargetId ? picks.anforderungen_und_angaben.recordOf(anforderungen_und_angabenTargetId) : undefined; },
     },

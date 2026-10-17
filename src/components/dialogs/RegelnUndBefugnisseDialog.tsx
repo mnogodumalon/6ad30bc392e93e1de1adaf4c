@@ -354,7 +354,7 @@ export function RegelnUndBefugnisseDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="regelbezeichnung">{fieldLabel('regeln_und_befugnisse', 'regelbezeichnung')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="regelbezeichnung"
-          placeholder="z. B. Rabattfreigabe ab 10 %"
+          placeholder=""
           value={fields.regelbezeichnung ?? ''}
           onChange={e => setFields(f => ({ ...f, regelbezeichnung: e.target.value }))}
           required
@@ -369,7 +369,7 @@ export function RegelnUndBefugnisseDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="regeltext">{fieldLabel('regeln_und_befugnisse', 'regeltext')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Textarea
           id="regeltext"
-          placeholder="Was genau gilt?"
+          placeholder=""
           value={fields.regeltext ?? ''}
           onChange={e => setFields(f => ({ ...f, regeltext: e.target.value }))}
           rows={3}
@@ -384,7 +384,7 @@ export function RegelnUndBefugnisseDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="geltungsbereich">{fieldLabel('regeln_und_befugnisse', 'geltungsbereich')}</Label>
         <Input
           id="geltungsbereich"
-          placeholder="z. B. Angebote über 5.000 €"
+          placeholder=""
           value={fields.geltungsbereich ?? ''}
           onChange={e => setFields(f => ({ ...f, geltungsbereich: e.target.value }))}
         />
@@ -500,7 +500,7 @@ export function RegelnUndBefugnisseDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="berechtigter">{fieldLabel('regeln_und_befugnisse', 'berechtigter')}</Label>
         <Combobox
           id="berechtigter"
-          placeholder="Wer darf entscheiden?"
+          placeholder=""
           items={beteiligteListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorname ?? r.record_id),
@@ -530,7 +530,7 @@ export function RegelnUndBefugnisseDialog({ open, onClose, onSubmit, defaultValu
         <Label htmlFor="gueltig_ab">{fieldLabel('regeln_und_befugnisse', 'gueltig_ab')}</Label>
         <DatePicker
           id="gueltig_ab"
-          placeholder="Ab wann gilt die Regel?"
+          placeholder=""
           mode="date"
           value={fields.gueltig_ab ?? null}
           onChange={v => setFields(f => ({ ...f, gueltig_ab: v ?? undefined }))}

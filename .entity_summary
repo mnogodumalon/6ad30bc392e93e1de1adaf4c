@@ -52,37 +52,37 @@ There is NO `@/config/appIds`, no `@/config/lookupOptions` and no
 createRecordUrl from the service. Note the lowercase `l` in the service path.
 
 - Beteiligte (beteiligte): vorname!^[string/text], nachname!^[string/text], rolle!^[lookup/select: vertrieb|konstruktion|arbeitsvorbereitung|qualitaetssicherung|kunde|sonstige], abteilung^[string/text] "Abteilung oder Stelle", zustaendigkeit^[string/textarea] "Zuständigkeitsbereich", email[string/email] "E-Mail", telefon[string/tel], entscheidungsbefugt[bool], befugnisgrenzen[string/textarea]
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ rolle → choice (6 options, ChoiceGroup)
   ⚙ getBeteiligte() · getBeteiligteEntry(id) · createBeteiligteEntry(fields) · updateBeteiligteEntry(id, fields) · deleteBeteiligteEntry(id) · queryBeteiligte({ filter, orderby, limit, offset, fields }) · countBeteiligte(filter?)
 - Informationsquellen (informationsquellen): bezeichnung!^[string/text], art!^[lookup/select: system|dokument|informelles_hilfsmittel|bewaehrte_routine], beschreibung^[string/textarea], verantwortlicher^[applookup/select], bekannte_schwaechen^[string/textarea]
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ art → choice (4 options, ChoiceGroup) · verantwortlicher → record (beteiligte, EntitySelectStep)
   ⚙ getInformationsquellen() · getInformationsquellenEntry(id) · createInformationsquellenEntry(fields) · updateInformationsquellenEntry(id, fields) · deleteInformationsquellenEntry(id) · queryInformationsquellen({ filter, orderby, limit, offset, fields }) · countInformationsquellen(filter?)
   ✚ EnrichedInformationsquellen adds ONLY verantwortlicherName — via enrichInformationsquellen(informationsquellen, { beteiligteMap }), all maps required
   → verantwortlicher links to app_id 6ad30b8e0042e397617f53a8
 - Regeln und Befugnisse (regeln_und_befugnisse): regelbezeichnung!^[string/text], regeltext!^[string/textarea], geltungsbereich^[string/text], regelart^[lookup/radio: verbindlich|empfehlung], berechtigte_rolle^[lookup/select: vertrieb|konstruktion|arbeitsvorbereitung|qualitaetssicherung|geschaeftsleitung] "Entscheidungsberechtigte Rolle", berechtigter[applookup/select] "Entscheidungsberechtigte Person", freigabepflicht[bool] "Freigabepflichtig", gueltig_ab[date/date], status[lookup/select: aktiv|inaktiv]
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ regelart → choice (2 options, ChoiceGroup) · berechtigte_rolle → choice (5 options, ChoiceGroup) · status → choice (2 options, ChoiceGroup) · berechtigter → record (beteiligte, EntitySelectStep)
   ⚙ getRegelnUndBefugnisse() · getRegelnUndBefugnisseEntry(id) · createRegelnUndBefugnisseEntry(fields) · updateRegelnUndBefugnisseEntry(id, fields) · deleteRegelnUndBefugnisseEntry(id) · queryRegelnUndBefugnisse({ filter, orderby, limit, offset, fields }) · countRegelnUndBefugnisse(filter?)
   ✚ EnrichedRegelnUndBefugnisse adds ONLY berechtigterName — via enrichRegelnUndBefugnisse(regelnUndBefugnisse, { beteiligteMap }), all maps required
   → berechtigter links to app_id 6ad30b8e0042e397617f53a8
 - Vorgänge (vorgaenge): uebergabestatus[lookup/select: nicht_bereit|bereit_mit_vorbehalt|uebergabebereit], vorgangsnummer!^[string/text], kunde^[applookup/select], bearbeiter!^[applookup/select], eingangsdatum!^[date/date], kundenanfrage^[string/textarea], prozessschritt![lookup/select: anfrage_verstehen|informationen_pruefen|beurteilungen_vorbereiten|beteiligte_einbeziehen|kommunikation_organisieren|entscheidungen_treffen|auftragsentwurf|abgeschlossen], freigabestatus[lookup/select: offen|in_pruefung|freigegeben|abgelehnt], tatsaechlicher_ablauf[string/textarea], verzoegerungen_nacharbeit[string/textarea] "Verzögerungen und Nacharbeit", entwurf_zusammenfassung[string/textarea] "Auftragsentwurf: Zusammenfassung", entwurf_geklaert[string/textarea] "Bereits geklärte Punkte", entwurf_offen[string/textarea] "Noch offene Punkte"
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ uebergabestatus → choice (3 options, ChoiceGroup) · freigabestatus → choice (4 options, ChoiceGroup) · kunde → record (beteiligte, EntitySelectStep) · bearbeiter → record (beteiligte, EntitySelectStep)
   ⚙ getVorgaenge() · getVorgaengeEntry(id) · createVorgaengeEntry(fields) · updateVorgaengeEntry(id, fields) · deleteVorgaengeEntry(id) · queryVorgaenge({ filter, orderby, limit, offset, fields }) · countVorgaenge(filter?)
   ✚ EnrichedVorgaenge adds ONLY kundeName, bearbeiterName — via enrichVorgaenge(vorgaenge, { beteiligteMap }), all maps required
   → kunde links to app_id 6ad30b8e0042e397617f53a8
   → bearbeiter links to app_id 6ad30b8e0042e397617f53a8
 - Anforderungen und Angaben (anforderungen_und_angaben): vorgang!^[applookup/select], bezeichnung!^[string/text], angabe^[string/textarea] "Wert oder Angabe", informationsquelle^[applookup/select], quellenverweis^[string/text], angabestatus![lookup/select: bestaetigt|ungeprueft|fehlend|widerspruechlich], luecke_widerspruch[string/textarea] "Lücke oder Widerspruch", unsicherheit[string/textarea] "Bestehende Unsicherheit", pruefpunkt[string/textarea] "Technischer Prüfpunkt"
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ angabestatus → choice (4 options, ChoiceGroup) · vorgang → record (vorgaenge, EntitySelectStep) · informationsquelle → record (informationsquellen, EntitySelectStep)
   ⚙ getAnforderungenUndAngaben() · getAnforderungenUndAngabenEntry(id) · createAnforderungenUndAngabenEntry(fields) · updateAnforderungenUndAngabenEntry(id, fields) · deleteAnforderungenUndAngabenEntry(id) · queryAnforderungenUndAngaben({ filter, orderby, limit, offset, fields }) · countAnforderungenUndAngaben(filter?)
   ✚ EnrichedAnforderungenUndAngaben adds ONLY vorgangName, informationsquelleName — via enrichAnforderungenUndAngaben(anforderungenUndAngaben, { vorgaengeMap, informationsquellenMap }), all maps required
   → vorgang links to app_id 6ad30b94865676544f7d28ef
   → informationsquelle links to app_id 6ad30b9338e75bfe185688eb
 - Fachliche Beurteilungen (fachliche_beurteilungen): vorgang!^[applookup/select], anforderung^[applookup/select], beurteiler!^[applookup/select], fachbereich^[lookup/select: vertrieb|konstruktion|arbeitsvorbereitung|qualitaetssicherung], beurteilungstext!^[string/textarea] "Beurteilung", ergebnis[string/text], unsicherheiten[string/textarea], gueltigkeitsstatus![lookup/select: entwurf|ki_vorschlag|fachlich_bestaetigt|verworfen], beurteilungsdatum[date/date] "Datum"
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ fachbereich → choice (4 options, ChoiceGroup) · gueltigkeitsstatus → choice (4 options, ChoiceGroup) · vorgang → record (vorgaenge, EntitySelectStep) · anforderung → record (anforderungen_und_angaben, EntitySelectStep) · beurteiler → record (beteiligte, EntitySelectStep)
   ⚙ getFachlicheBeurteilungen() · getFachlicheBeurteilungenEntry(id) · createFachlicheBeurteilungenEntry(fields) · updateFachlicheBeurteilungenEntry(id, fields) · deleteFachlicheBeurteilungenEntry(id) · queryFachlicheBeurteilungen({ filter, orderby, limit, offset, fields }) · countFachlicheBeurteilungen(filter?)
   ✚ EnrichedFachlicheBeurteilungen adds ONLY vorgangName, anforderungName, beurteilerName — via enrichFachlicheBeurteilungen(fachlicheBeurteilungen, { vorgaengeMap, anforderungenUndAngabenMap, beteiligteMap }), all maps required
@@ -90,7 +90,7 @@ createRecordUrl from the service. Note the lowercase `l` in the service path.
   → anforderung links to app_id 6ad30b958d763c2961a03cf4
   → beurteiler links to app_id 6ad30b8e0042e397617f53a8
 - Rückfragen (rueckfragen): vorgang!^[applookup/select], anforderungen^[multipleapplookup/select] "Betroffene Anforderungen", adressat!^[applookup/select], fragetext!^[string/textarea], buendelkennung^[string/text], status![lookup/select: vorbereitet|gesendet|beantwortet|erledigt], antwort[string/textarea], antwortdatum[date/date], alter_wert[string/text] "Alter Wert der Angabe", neuer_wert[string/text] "Neuer Wert der Angabe"
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ status → choice (4 options, ChoiceGroup) · vorgang → record (vorgaenge, EntitySelectStep) · anforderungen → record (anforderungen_und_angaben, EntitySelectStep) · adressat → record (beteiligte, EntitySelectStep)
   ⚙ getRueckfragen() · getRueckfragenEntry(id) · createRueckfragenEntry(fields) · updateRueckfragenEntry(id, fields) · deleteRueckfragenEntry(id) · queryRueckfragen({ filter, orderby, limit, offset, fields }) · countRueckfragen(filter?)
   ✚ EnrichedRueckfragen adds ONLY vorgangName, anforderungenName, adressatName — via enrichRueckfragen(rueckfragen, { vorgaengeMap, anforderungenUndAngabenMap, beteiligteMap }), all maps required
@@ -98,7 +98,7 @@ createRecordUrl from the service. Note the lowercase `l` in the service path.
   → anforderungen links to app_id 6ad30b958d763c2961a03cf4
   → adressat links to app_id 6ad30b8e0042e397617f53a8
 - Entscheidungen und Freigaben (entscheidungen_und_freigaben): vorgang!^[applookup/select], grundlage_anforderungen^[multipleapplookup/select] "Zugrunde liegende Anforderungen", beurteilung^[applookup/select] "Fachliche Beurteilung", regel^[applookup/select] "Anwendbare Regel", entscheider!^[applookup/select], befugnis_geprueft[bool] "Entscheidungsbefugnis geprüft", unsicherheiten[string/textarea] "Verbleibende Unsicherheiten", vorschlag[string/textarea] "Vorschlag (auch KI-Vorschlag)", entscheidung[string/textarea] "Tatsächliche Entscheidung", begruendung[string/textarea], folgen[string/textarea], freigabestatus![lookup/select: offen|freigegeben|abgelehnt|zurueckgestellt], entscheidungsdatum[date/date] "Datum"
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ freigabestatus → choice (4 options, ChoiceGroup) · vorgang → record (vorgaenge, EntitySelectStep) · grundlage_anforderungen → record (anforderungen_und_angaben, EntitySelectStep) · beurteilung → record (fachliche_beurteilungen, EntitySelectStep) · regel → record (regeln_und_befugnisse, EntitySelectStep) · entscheider → record (beteiligte, EntitySelectStep)
   ⚙ getEntscheidungenUndFreigaben() · getEntscheidungenUndFreigabenEntry(id) · createEntscheidungenUndFreigabenEntry(fields) · updateEntscheidungenUndFreigabenEntry(id, fields) · deleteEntscheidungenUndFreigabenEntry(id) · queryEntscheidungenUndFreigaben({ filter, orderby, limit, offset, fields }) · countEntscheidungenUndFreigaben(filter?)
   ✚ EnrichedEntscheidungenUndFreigaben adds ONLY vorgangName, grundlage_anforderungenName, beurteilungName, regelName, entscheiderName — via enrichEntscheidungenUndFreigaben(entscheidungenUndFreigaben, { vorgaengeMap, anforderungenUndAngabenMap, fachlicheBeurteilungenMap, regelnUndBefugnisseMap, beteiligteMap }), all maps required
@@ -108,7 +108,7 @@ createRecordUrl from the service. Note the lowercase `l` in the service path.
   → regel links to app_id 6ad30b940a982f4bfcc4e103
   → entscheider links to app_id 6ad30b8e0042e397617f53a8
 - Erfahrungen (erfahrungen): vorgang!^[applookup/select], titel!^[string/text], kategorie^[lookup/select: bewaehrte_routine|fehler|nacharbeit|verzoegerung|informationsluecke|widerspruch|abstimmungsschleife], beschreibung!^[string/textarea], ursache[string/textarea], verbesserungsvorschlag[string/textarea], pruefstatus[lookup/select: ungeprueft|in_pruefung|geprueft|verworfen], pruefer[applookup/select], wiederverwendbar[bool] "Für spätere Aufträge wiederverwendbar", art!^[lookup/select: beobachtete_tatsache|ungeprueft_annahme=Ungeprüfte Annahme|bestaetigte_erkenntnis=Fachlich bestätigte Erkenntnis|verbindliche_regel|situative_entscheidung=Situationsabhängige Entscheidung] "Art der Erfahrung"
-  ≡ 3 records at build time
+  ≡ 8 records at build time
   ◈ pruefstatus → choice (4 options, ChoiceGroup) · art → choice (5 options, ChoiceGroup) · vorgang → record (vorgaenge, EntitySelectStep) · pruefer → record (beteiligte, EntitySelectStep)
   ⚙ getErfahrungen() · getErfahrungenEntry(id) · createErfahrungenEntry(fields) · updateErfahrungenEntry(id, fields) · deleteErfahrungenEntry(id) · queryErfahrungen({ filter, orderby, limit, offset, fields }) · countErfahrungen(filter?)
   ✚ EnrichedErfahrungen adds ONLY vorgangName, prueferName — via enrichErfahrungen(erfahrungen, { vorgaengeMap, beteiligteMap }), all maps required
